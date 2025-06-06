@@ -1,6 +1,6 @@
-/* eslint-disable no-magic-numbers */
+/* eslint-disable @typescript-eslint/no-magic-numbers */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /* eslint-disable unicorn/prefer-code-point */
-/* eslint-disable no-shadow */
 /* eslint-disable no-param-reassign */
 /* eslint-disable logical-assignment-operators */
 /* eslint-disable complexity */
@@ -17,33 +17,48 @@ import { deburr } from 'es-toolkit/string';
 
 const DEFAULT_MAX_LENGTH = 32;
 
-const rules = parse(
+type CsvRule = {
+  'etape': string;
+  'long': string;
+  'court': string;
+  'option': string;
+};
+
+type Rules = {
+  [key: number]: Array<{
+    'long': string;
+    'short': string;
+  }>;
+};
+
+const parsed = parse(
   readFileSync(path.join(import.meta.dir, 'normadresse.csv')),
-  {
-    columns: true,
-  },
-).reduce((rules, rule) => {
-  const step = parseFloat(rule.etape, 10);
+  { columns: true },
+) as CsvRule[];
 
-  rules[step] = rules[step] || [];
+const rules = parsed.reduce<Rules>((acc: Rules, rule: CsvRule) => {
+  const step = parseFloat(rule.etape);
 
-  rules[step].push({
+  acc[step] = acc[step] ?? [];
+
+  acc[step].push({
     long: rule.long,
     short: rule.court.replace(/\\g<(\d+)>/g, '$$$1'),
   });
 
-  return rules;
+  return acc;
 }, {});
 
-function selectShortWords(input, output, maxLength) {
+function selectShortWords(input: string, output: string, maxLength: number) {
   const long = input.split(' ');
   const short = output.split(' ');
 
   for (let i = short.length - 1; i >= 0; i--) {
     if (short[i] === '@') {
-      long[i - 1] = short[i - 1];
-      delete long[i];
-      delete short[i];
+      long[i - 1] = short[i - 1]!;
+
+      long.splice(i, 1);
+      short.splice(i, 1);
     }
   }
 
@@ -60,10 +75,11 @@ function selectShortWords(input, output, maxLength) {
     }
   }
 
-  return next;
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+  return next!;
 }
 
-function normalize_(input, maxLength = DEFAULT_MAX_LENGTH) {
+function normalizer(input: string, maxLength = DEFAULT_MAX_LENGTH) {
   input = deburr(input)
     .toUpperCase()
     .replace(/[^A-Z0-9s]/g, ' ')
@@ -76,7 +92,7 @@ function normalize_(input, maxLength = DEFAULT_MAX_LENGTH) {
   }
 
   // 1 - abréviation du type de voie
-  for (const rule of rules[1]) {
+  for (const rule of rules[1]!) {
     output = output.replace(new RegExp(rule.long), rule.short);
   }
 
@@ -90,7 +106,7 @@ function normalize_(input, maxLength = DEFAULT_MAX_LENGTH) {
 
   // 2 - abréviation des titres militaires, religieux et civils
   for (let step = 0; step < 2; step++) {
-    for (const rule of rules[2]) {
+    for (const rule of rules[2]!) {
       output = output.replace(new RegExp(` ${rule.long} `), ` ${rule.short} `);
     }
   }
@@ -105,7 +121,7 @@ function normalize_(input, maxLength = DEFAULT_MAX_LENGTH) {
 
   // 4 - abréviations générales
   for (let step = 0; step < 3; step++) {
-    for (const rule of rules[4]) {
+    for (const rule of rules[4]!) {
       output = output
         .replace(
           new RegExp(`(^| )${rule.long} `),
@@ -125,14 +141,14 @@ function normalize_(input, maxLength = DEFAULT_MAX_LENGTH) {
 
   // 5 - abréviation type de voies
   for (let step = 0; step < 2; step++) {
-    for (const rule of rules[5]) {
+    for (const rule of rules[5]!) {
       output = output.replace(
         new RegExp(` ${rule.long.trim()} `),
         ` ${rule.short.trim().toLowerCase()} `,
       );
     }
 
-    for (const rule of rules[1]) {
+    for (const rule of rules[1]!) {
       output = output.replace(
         new RegExp(` ${rule.long.trim()} `),
         ` ${rule.short.trim().toLowerCase()} `,
@@ -154,9 +170,9 @@ function normalize_(input, maxLength = DEFAULT_MAX_LENGTH) {
   for (let i = 1; i < words.length - 1; i++) {
     const word = words[i];
 
-    if (words[i - 1].slice(0, 5) !== 'SAINT') {
-      for (const rule of rules[3]) {
-        if (new RegExp(`${rule.long}`).test(word)) {
+    if (!words[i - 1]!.startsWith('SAINT')) {
+      for (const rule of rules[3]!) {
+        if (new RegExp(rule.long).test(word!)) {
           words[i] = rule.short.toLowerCase();
         }
       }
@@ -175,7 +191,7 @@ function normalize_(input, maxLength = DEFAULT_MAX_LENGTH) {
 
   // 6 - abréviation saint/sainte et prolonge(e)/inférieur(e)
   for (let step = 0; step < 2; step++) {
-    for (const rule of rules[6]) {
+    for (const rule of rules[6]!) {
       output = output.replace(new RegExp(rule.long), rule.short.toLowerCase());
     }
   }
@@ -189,7 +205,7 @@ function normalize_(input, maxLength = DEFAULT_MAX_LENGTH) {
   input = output;
 
   // 5bis - type de voie en début...
-  for (const rule of rules[5]) {
+  for (const rule of rules[5]!) {
     output = output.replace(
       new RegExp(`^${rule.long.trim()} `),
       `${rule.short.trim().toLowerCase()} `,
@@ -203,14 +219,14 @@ function normalize_(input, maxLength = DEFAULT_MAX_LENGTH) {
   }
 
   // 9 - remplacement des particules des noms propres pour ne pas les supprimer
-  for (const rule of rules[9]) {
+  for (const rule of rules[9]!) {
     output = output.replace(new RegExp(rule.long), rule.short);
   }
 
   // 10 - élimination des articles
   for (let step = 0; step < 6; step++) {
     output = output.replace(
-      / (LE|LA|LES|AU|AUX|DE|DU|DES|[DAL]|ET|SUR|EN) /,
+      / (?:LE|LA|LES|AU|AUX|DE|DU|DES|[DAL]|ET|SUR|EN) /,
       ' ',
     );
 
@@ -226,11 +242,11 @@ function normalize_(input, maxLength = DEFAULT_MAX_LENGTH) {
     const word = words[i];
 
     if (
-      word === word.toUpperCase() &&
+      word === word!.toUpperCase() &&
       word.length > 1 &&
       word.charCodeAt(0) >= 'A'.charCodeAt(0)
     ) {
-      words[i] = word[0];
+      words[i] = word[0]!;
 
       output = words.join(' ');
 
@@ -242,7 +258,10 @@ function normalize_(input, maxLength = DEFAULT_MAX_LENGTH) {
 
   // 12 - élimination des articles
   for (let step = 0; step < 4; step++) {
-    output = output.replace(/ (le|la|les|au|aux|de|du|des|[dal]|et|sur) /, ' ');
+    output = output.replace(
+      / (?:le|la|les|au|aux|de|du|des|[dal]|et|sur) /,
+      ' ',
+    );
 
     if (output.length <= maxLength) {
       return output;
@@ -252,6 +271,6 @@ function normalize_(input, maxLength = DEFAULT_MAX_LENGTH) {
   return output;
 }
 
-export function normalize(input, maxLength = DEFAULT_MAX_LENGTH) {
-  return normalize_(input, maxLength).toUpperCase();
+export function normalize(input: string, maxLength = DEFAULT_MAX_LENGTH) {
+  return normalizer(input, maxLength).toUpperCase();
 }

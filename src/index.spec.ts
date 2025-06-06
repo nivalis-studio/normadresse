@@ -142,7 +142,7 @@ describe('normalize', () => {
         'RUE ALICE DOMON ET LÉONIE DUQUET, SŒUR ALICIA ET SŒUR LÉONIE',
         'RUE A D L D S A SOEUR LEONIE',
       ],
-    ];
+    ] as const;
 
     for (const [source, expected] of fixtures) {
       expect(normalize(source)).toBe(expected);
