@@ -1,69 +1,65 @@
 {
-  "name": "@etalab/normadresse",
+  "name": "@nivalis/normadresse",
   "version": "1.1.0",
   "description": "French Postal Addresses Normalizer",
-  "main": "index.js",
-  "repository": "https://github.com/etalab/js-normadresse",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "author": "Bertrand Marron <bertrand.marron@gmail.com>",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nivalis/normadresse.git"
+  },
+  "homepage": "https://github.com/nivalis/normadresse#readme",
+  "bugs": {
+    "url": "https://github.com/nivalis/normadresse/issues"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT",
+  "sideEffects": false,
+  "packageManager": "bun@1.2.15",
   "scripts": {
-    "test": "jest"
+    "test": "bun test",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "ts": "tsc",
+    "build": "tsdown",
+    "prepack": "tsdown",
+    "prepare": "bunx lefthook install"
   },
   "files": [
-    "index.js",
-    "normadresse.csv"
+    "dist",
+    "normadresse.csv",
+    "package.json",
+    "README.md"
   ],
   "dependencies": {
-    "csv-parse": "^4.15.1",
-    "lodash": "^4.17.20"
+    "csv-parse": "^5.6.0",
+    "es-toolkit": "^1.39.1"
   },
   "devDependencies": {
-    "codecov": "^3.8.1",
-    "jest": "^26.6.3",
-    "jest-junit": "^12.0.0",
-    "lerna-changelog": "^1.0.1",
-    "xo": "^0.25.3"
+    "@commitlint/cli": "19.8.1",
+    "@commitlint/config-conventional": "19.8.1",
+    "@nivalis/eslint-config": "5.3.1",
+    "@nivalis/prettier-config": "3.5.3",
+    "@types/bun": "latest",
+    "eslint": "9.28.0",
+    "lefthook": "1.11.13",
+    "lint-staged": "16.1.0",
+    "prettier": "3.5.3",
+    "tsdown": "0.12.7"
   },
-  "xo": {
-    "semicolon": false,
-    "space": 2,
-    "overrides": [
-      {
-        "files": "__tests__/**/*.js",
-        "envs": [
-          "jest"
-        ]
-      }
-    ]
+  "peerDependencies": {
+    "typescript": "^5"
   },
-  "jest": {
-    "reporters": [
-      "default",
-      [
-        "jest-junit",
-        {
-          "output": "reports/tests/junit.xml"
-        }
-      ]
-    ],
-    "collectCoverage": true,
-    "coverageReporters": [
-      "lcov",
-      "text-summary"
-    ]
-  },
-  "changelog": {
-    "cacheDir": ".changelog",
-    "labels": {
-      "bug": ":bug: Bug Fix",
-      "build": ":building_construction: Build Process",
-      "cleanup": ":shower: Cleanup",
-      "documentation": ":memo: Documentation",
-      "enhancement": ":rocket: Enhancement",
-      "performance": ":racehorse: Performance",
-      "security": ":policeman: Security",
-      "dependencies": ":arrow_up: Dependencies"
-    },
-    "repo": "etalab/js-normadresse"
+  "lint-staged": {
+    "*": "eslint --quiet --fix"
   }
 }
