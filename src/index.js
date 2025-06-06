@@ -1,4 +1,4 @@
-/* eslint-disable sonarjs/no-dead-store */
+/* eslint-disable no-magic-numbers */
 /* eslint-disable unicorn/prefer-code-point */
 /* eslint-disable no-shadow */
 /* eslint-disable no-param-reassign */
@@ -201,8 +201,6 @@ function normalize_(input, maxLength = DEFAULT_MAX_LENGTH) {
   if (output.length <= maxLength) {
     return output;
   }
-
-  input = output;
 
   // 9 - remplacement des particules des noms propres pour ne pas les supprimer
   for (const rule of rules[9]) {
