@@ -1,6 +1,6 @@
 {
   "name": "@nivalis/normadresse",
-  "version": "1.2.0-beta.1",
+  "version": "1.2.0-beta.2",
   "description": "French Postal Addresses Normalizer",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
