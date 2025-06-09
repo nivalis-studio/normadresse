@@ -32,7 +32,7 @@ type Rules = {
 };
 
 const parsed = parse(
-  readFileSync(path.join(import.meta.dir, 'normadresse.csv')),
+  readFileSync(path.join(import.meta.dir, '../normadresse.csv')),
   { columns: true },
 ) as CsvRule[];
 
