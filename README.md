@@ -3,14 +3,12 @@
 > French Postal Addresses Normalizer
 
 [![npm version](https://badgen.net/npm/v/@nivalis/normadresse)](https://www.npmjs.com/package/@nivalis/normadresse)
-[![dependencies Status](https://badgen.net/david/dep/nivalis/js-normadresse)](https://david-dm.org/nivalis/js-normadresse)
-[![codecov](https://badgen.net/codecov/c/github/nivalis/js-normadresse)](https://codecov.io/gh/nivalis/js-normadresse)
-[![XO code style](https://badgen.net/badge/code%20style/XO/cyan)](https://github.com/xojs/xo)
+[![dependencies Status](https://img.shields.io/librariesio/release/npm/%40nivalis%2Fnormadresse)
 
 ## Getting started
 
 ```bash
-$ yarn add @nivalis/normadresse
+$ npm install @nivalis/normadresse
 ```
 
 ## API
