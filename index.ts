@@ -11,7 +11,7 @@
 /* eslint-disable unicorn/prefer-number-properties */
 
 import path from 'node:path';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { parse } from 'csv-parse/sync';
 import { deburr } from 'es-toolkit/string';
 
@@ -31,10 +31,23 @@ type Rules = {
   }>;
 };
 
-const parsed = parse(
-  readFileSync(path.join(import.meta.dir, '../normadresse.csv')),
-  { columns: true },
-) as CsvRule[];
+const findCsvFile = (): string => {
+  const possiblePaths = ['../normadresse.csv', './normadresse.csv'];
+
+  for (const relativePath of possiblePaths) {
+    const fullPath = path.join(import.meta.dir, relativePath);
+
+    if (existsSync(fullPath)) return fullPath;
+  }
+
+  throw new Error(
+    `CSV file not found. Tried paths: ${possiblePaths.join(', ')}`,
+  );
+};
+
+const parsed = parse(readFileSync(findCsvFile()), {
+  columns: true,
+}) as CsvRule[];
 
 const rules = parsed.reduce<Rules>((acc: Rules, rule: CsvRule) => {
   const step = parseFloat(rule.etape);
