@@ -9,18 +9,29 @@ import { deburr } from 'es-toolkit/string';
 const DEFAULT_MAX_LENGTH = 32;
 
 type CsvRule = {
-  'etape': string;
-  'long': string;
-  'court': string;
-  'option': string;
+  etape: string;
+  long: string;
+  court: string;
+  option: string;
+};
+type CompiledRule = {
+  long: string;
+  short: string;
+  pattern?: RegExp;
 };
 
 type Rules = {
-  [key: number]: Array<{
-    'long': string;
-    'short': string;
-  }>;
+  [key: number]: CompiledRule[];
 };
+
+let cachedRules: Rules | null = null;
+
+const SPECIAL_CHARS_PATTERN = /[^A-Z0-9\s]/g;
+const MULTIPLE_SPACES_PATTERN = /\s{2,}/g;
+const UPPERCASE_ARTICLES_PATTERN =
+  / (?:LE|LA|LES|AU|AUX|DE|DU|DES|[DAL]|ET|SUR|EN) /;
+const LOWERCASE_ARTICLES_PATTERN =
+  / (?:le|la|les|au|aux|de|du|des|[dal]|et|sur) /;
 
 const findCsvFile = (): string => {
   const possiblePaths = ['../normadresse.csv', './normadresse.csv'];
@@ -36,23 +47,48 @@ const findCsvFile = (): string => {
   );
 };
 
-const parsed = parse(readFileSync(findCsvFile()), {
-  columns: true,
-}) as CsvRule[];
+const compileRules = (): Rules => {
+  if (cachedRules) return cachedRules;
 
-const rules = parsed.reduce<Rules>((acc: Rules, rule: CsvRule) => {
-  const step = Number.parseFloat(rule.etape);
-  const newRules = acc;
+  const csvContent = readFileSync(findCsvFile(), 'utf8');
+  const parsed = parse(csvContent, {
+    columns: true,
+    skip_empty_lines: true,
+  }) as CsvRule[];
 
-  newRules[step] ??= [];
+  const rules = parsed.reduce<Rules>((acc: Rules, rule: CsvRule) => {
+    const step = Number.parseFloat(rule.etape);
+    const newRules = acc;
 
-  newRules[step].push({
-    long: rule.long,
-    short: rule.court.replaceAll(/\\g<(\d+)>/g, '$$$1'),
-  });
+    newRules[step] ??= [];
 
-  return newRules;
-}, {});
+    let pattern: RegExp | undefined;
+
+    if (step === 1) {
+      try {
+        pattern = new RegExp(rule.long, 'g');
+      } catch {
+        // Fallback for invalid regex patterns
+        pattern = new RegExp(
+          rule.long.replaceAll(/[.*+?^${}()|[\]\\]/g, '\\$&'),
+          'g',
+        );
+      }
+    }
+
+    newRules[step].push({
+      long: rule.long,
+      short: rule.court.replaceAll(/\\g<(\d+)>/g, '$$$1'),
+      pattern,
+    });
+
+    return newRules;
+  }, {});
+
+  cachedRules = rules;
+
+  return rules;
+};
 
 const selectShortWords = (
   input: string,
@@ -64,7 +100,9 @@ const selectShortWords = (
 
   for (let i = short.length - 1; i >= 0; i--) {
     if (short[i] === '@') {
-      long[i - 1] = short[i - 1]!;
+      if (i > 0) {
+        long[i - 1] = short[i - 1]!;
+      }
 
       long.splice(i, 1);
       short.splice(i, 1);
@@ -90,8 +128,9 @@ const selectShortWords = (
 const preprocessInput = (originalInput: string): string => {
   return deburr(originalInput)
     .toUpperCase()
-    .replaceAll(/[^A-Z0-9s]/g, ' ')
-    .replaceAll(/ {2}/g, ' ');
+    .replaceAll(SPECIAL_CHARS_PATTERN, ' ')
+    .replaceAll(MULTIPLE_SPACES_PATTERN, ' ')
+    .trim();
 };
 
 const applyRoadTypeAbbreviations = (
@@ -99,11 +138,15 @@ const applyRoadTypeAbbreviations = (
   currentOutput: string,
   maxLength: number,
 ): string => {
+  const rules = compileRules();
   let output = currentOutput;
 
-  // 1 - abréviation du type de voie
-  for (const rule of rules[1]!) {
-    output = output.replace(new RegExp(rule.long), rule.short);
+  for (const rule of rules[1] ?? []) {
+    if (rule.pattern) {
+      output = output.replace(rule.pattern, rule.short);
+    } else {
+      output = output.replace(new RegExp(rule.long), rule.short);
+    }
   }
 
   return selectShortWords(currentInput, output, maxLength);
@@ -114,11 +157,12 @@ const applyTitleAbbreviations = (
   currentOutput: string,
   maxLength: number,
 ): string => {
+  const rules = compileRules();
   let output = currentOutput;
 
   // 2 - abréviation des titres militaires, religieux et civils
   for (let step = 0; step < 2; step++) {
-    for (const rule of rules[2]!) {
+    for (const rule of rules[2] ?? []) {
       output = output.replace(new RegExp(` ${rule.long} `), ` ${rule.short} `);
     }
   }
@@ -131,11 +175,12 @@ const applyGeneralAbbreviations = (
   currentOutput: string,
   maxLength: number,
 ): string => {
+  const rules = compileRules();
   let output = currentOutput;
 
   // 4 - abréviations générales
   for (let step = 0; step < 3; step++) {
-    for (const rule of rules[4]!) {
+    for (const rule of rules[4] ?? []) {
       output = output
         .replace(
           new RegExp(`(^| )${rule.long} `),
@@ -153,18 +198,19 @@ const applyRoadTypeAbbreviationsBis = (
   currentOutput: string,
   maxLength: number,
 ): string => {
+  const rules = compileRules();
   let output = currentOutput;
 
   // 5 - abréviation type de voies
   for (let step = 0; step < 2; step++) {
-    for (const rule of rules[5]!) {
+    for (const rule of rules[5] ?? []) {
       output = output.replace(
         new RegExp(` ${rule.long.trim()} `),
         ` ${rule.short.trim().toLowerCase()} `,
       );
     }
 
-    for (const rule of rules[1]!) {
+    for (const rule of rules[1] ?? []) {
       output = output.replace(
         new RegExp(` ${rule.long.trim()} `),
         ` ${rule.short.trim().toLowerCase()} `,
@@ -180,6 +226,7 @@ const applyFirstNameAbbreviations = (
   currentOutput: string,
   maxLength: number,
 ): string => {
+  const rules = compileRules();
   let output = currentOutput;
 
   // 3 - abréviations prénoms sauf pour ST prénoms
@@ -189,7 +236,7 @@ const applyFirstNameAbbreviations = (
     const word = words[i];
 
     if (!words[i - 1]!.startsWith('SAINT')) {
-      for (const rule of rules[3]!) {
+      for (const rule of rules[3] ?? []) {
         if (new RegExp(rule.long).test(word!)) {
           words[i] = rule.short.toLowerCase();
         }
@@ -207,11 +254,12 @@ const applySaintAbbreviations = (
   currentOutput: string,
   maxLength: number,
 ): string => {
+  const rules = compileRules();
   let output = currentOutput;
 
   // 6 - abréviation saint/sainte et prolonge(e)/inférieur(e)
   for (let step = 0; step < 2; step++) {
-    for (const rule of rules[6]!) {
+    for (const rule of rules[6] ?? []) {
       output = output.replace(new RegExp(rule.long), rule.short.toLowerCase());
     }
   }
@@ -219,25 +267,31 @@ const applySaintAbbreviations = (
   return selectShortWords(currentInput, output, maxLength);
 };
 
-const applyRoadTypeBeginning = (currentOutput: string): string => {
+const applyRoadTypeBeginning = (
+  currentInput: string,
+  currentOutput: string,
+  maxLength: number,
+): string => {
+  const rules = compileRules();
   let output = currentOutput;
 
   // 5bis - type de voie en début...
-  for (const rule of rules[5]!) {
+  for (const rule of rules[5] ?? []) {
     output = output.replace(
       new RegExp(`^${rule.long.trim()} `),
       `${rule.short.trim().toLowerCase()} `,
     );
   }
 
-  return output;
+  return selectShortWords(currentInput, output, maxLength);
 };
 
 const applyParticleReplacement = (currentOutput: string): string => {
+  const rules = compileRules();
   let output = currentOutput;
 
   // 9 - remplacement des particules des noms propres pour ne pas les supprimer
-  for (const rule of rules[9]!) {
+  for (const rule of rules[9] ?? []) {
     output = output.replace(new RegExp(rule.long), rule.short);
   }
 
@@ -252,10 +306,7 @@ const removeUppercaseArticles = (
 
   // 10 - élimination des articles
   for (let step = 0; step < 6; step++) {
-    output = output.replace(
-      / (?:LE|LA|LES|AU|AUX|DE|DU|DES|[DAL]|ET|SUR|EN) /,
-      ' ',
-    );
+    output = output.replace(UPPERCASE_ARTICLES_PATTERN, ' ');
 
     if (output.length <= maxLength) {
       return output;
@@ -303,10 +354,7 @@ const removeLowercaseArticles = (
 
   // 12 - élimination des articles
   for (let step = 0; step < 4; step++) {
-    output = output.replace(
-      / (?:le|la|les|au|aux|de|du|des|[dal]|et|sur) /,
-      ' ',
-    );
+    output = output.replace(LOWERCASE_ARTICLES_PATTERN, ' ');
 
     if (output.length <= maxLength) {
       return output;
@@ -389,11 +437,15 @@ const applyMiddleSteps = (
   return { output, currentInput: updatedInput };
 };
 
-const applyFinalSteps = (output: string, maxLength: number): string => {
+const applyFinalSteps = (
+  output: string,
+  currentInput: string,
+  maxLength: number,
+): string => {
   let result = output;
 
   // Step 7: Road type at beginning
-  result = applyRoadTypeBeginning(result);
+  result = applyRoadTypeBeginning(currentInput, result, maxLength);
 
   if (result.length <= maxLength) {
     return result;
@@ -449,7 +501,11 @@ const normalizer = (
     return middleResult.output;
   }
 
-  return applyFinalSteps(middleResult.output, maxLength);
+  return applyFinalSteps(
+    middleResult.output,
+    middleResult.currentInput,
+    maxLength,
+  );
 };
 
 export const normalize = (
@@ -457,4 +513,8 @@ export const normalize = (
   maxLength = DEFAULT_MAX_LENGTH,
 ): string => {
   return normalizer(input, maxLength).toUpperCase();
+};
+
+export const clearRulesCache = (): void => {
+  cachedRules = null;
 };
