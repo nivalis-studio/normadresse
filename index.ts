@@ -1,14 +1,5 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-/* eslint-disable unicorn/prefer-code-point */
-/* eslint-disable no-param-reassign */
-/* eslint-disable logical-assignment-operators */
-/* eslint-disable complexity */
-/* eslint-disable sonarjs/cognitive-complexity */
-/* eslint-disable max-statements */
-/* eslint-disable func-style */
-/* eslint-disable unicorn/prefer-string-replace-all */
-/* eslint-disable unicorn/prefer-number-properties */
 
 import path from 'node:path';
 import { existsSync, readFileSync } from 'node:fs';
@@ -50,19 +41,24 @@ const parsed = parse(readFileSync(findCsvFile()), {
 }) as CsvRule[];
 
 const rules = parsed.reduce<Rules>((acc: Rules, rule: CsvRule) => {
-  const step = parseFloat(rule.etape);
+  const step = Number.parseFloat(rule.etape);
+  const newRules = acc;
 
-  acc[step] = acc[step] ?? [];
+  newRules[step] ??= [];
 
-  acc[step].push({
+  newRules[step].push({
     long: rule.long,
-    short: rule.court.replace(/\\g<(\d+)>/g, '$$$1'),
+    short: rule.court.replaceAll(/\\g<(\d+)>/g, '$$$1'),
   });
 
-  return acc;
+  return newRules;
 }, {});
 
-function selectShortWords(input: string, output: string, maxLength: number) {
+const selectShortWords = (
+  input: string,
+  output: string,
+  maxLength: number,
+): string => {
   const long = input.split(' ');
   const short = output.split(' ');
 
@@ -75,7 +71,7 @@ function selectShortWords(input: string, output: string, maxLength: number) {
     }
   }
 
-  let next;
+  let next = '';
 
   for (let i = 1; i < short.length; ++i) {
     next = [
@@ -88,34 +84,37 @@ function selectShortWords(input: string, output: string, maxLength: number) {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-  return next!;
-}
+  return next;
+};
 
-function normalizer(input: string, maxLength = DEFAULT_MAX_LENGTH) {
-  input = deburr(input)
+const preprocessInput = (originalInput: string): string => {
+  return deburr(originalInput)
     .toUpperCase()
-    .replace(/[^A-Z0-9s]/g, ' ')
-    .replace(/ {2}/g, ' ');
+    .replaceAll(/[^A-Z0-9s]/g, ' ')
+    .replaceAll(/ {2}/g, ' ');
+};
 
-  let output = input;
-
-  if (output.length <= maxLength) {
-    return output;
-  }
+const applyRoadTypeAbbreviations = (
+  currentInput: string,
+  currentOutput: string,
+  maxLength: number,
+): string => {
+  let output = currentOutput;
 
   // 1 - abréviation du type de voie
   for (const rule of rules[1]!) {
     output = output.replace(new RegExp(rule.long), rule.short);
   }
 
-  output = selectShortWords(input, output, maxLength);
+  return selectShortWords(currentInput, output, maxLength);
+};
 
-  if (output.length <= maxLength) {
-    return output;
-  }
-
-  input = output;
+const applyTitleAbbreviations = (
+  currentInput: string,
+  currentOutput: string,
+  maxLength: number,
+): string => {
+  let output = currentOutput;
 
   // 2 - abréviation des titres militaires, religieux et civils
   for (let step = 0; step < 2; step++) {
@@ -124,13 +123,15 @@ function normalizer(input: string, maxLength = DEFAULT_MAX_LENGTH) {
     }
   }
 
-  output = selectShortWords(input, output, maxLength);
+  return selectShortWords(currentInput, output, maxLength);
+};
 
-  if (output.length <= maxLength) {
-    return output;
-  }
-
-  input = output;
+const applyGeneralAbbreviations = (
+  currentInput: string,
+  currentOutput: string,
+  maxLength: number,
+): string => {
+  let output = currentOutput;
 
   // 4 - abréviations générales
   for (let step = 0; step < 3; step++) {
@@ -144,13 +145,15 @@ function normalizer(input: string, maxLength = DEFAULT_MAX_LENGTH) {
     }
   }
 
-  output = selectShortWords(input, output, maxLength);
+  return selectShortWords(currentInput, output, maxLength);
+};
 
-  if (output.length <= maxLength) {
-    return output;
-  }
-
-  input = output;
+const applyRoadTypeAbbreviationsBis = (
+  currentInput: string,
+  currentOutput: string,
+  maxLength: number,
+): string => {
+  let output = currentOutput;
 
   // 5 - abréviation type de voies
   for (let step = 0; step < 2; step++) {
@@ -169,16 +172,18 @@ function normalizer(input: string, maxLength = DEFAULT_MAX_LENGTH) {
     }
   }
 
-  output = selectShortWords(input, output, maxLength);
+  return selectShortWords(currentInput, output, maxLength);
+};
 
-  if (output.length <= maxLength) {
-    return output;
-  }
-
-  input = output;
+const applyFirstNameAbbreviations = (
+  currentInput: string,
+  currentOutput: string,
+  maxLength: number,
+): string => {
+  let output = currentOutput;
 
   // 3 - abréviations prénoms sauf pour ST prénoms
-  let words = output.split(' ');
+  const words = output.split(' ');
 
   for (let i = 1; i < words.length - 1; i++) {
     const word = words[i];
@@ -194,13 +199,15 @@ function normalizer(input: string, maxLength = DEFAULT_MAX_LENGTH) {
     output = words.join(' ');
   }
 
-  output = selectShortWords(input, output, maxLength);
+  return selectShortWords(currentInput, output, maxLength);
+};
 
-  if (output.length <= maxLength) {
-    return output;
-  }
-
-  input = output;
+const applySaintAbbreviations = (
+  currentInput: string,
+  currentOutput: string,
+  maxLength: number,
+): string => {
+  let output = currentOutput;
 
   // 6 - abréviation saint/sainte et prolonge(e)/inférieur(e)
   for (let step = 0; step < 2; step++) {
@@ -209,13 +216,11 @@ function normalizer(input: string, maxLength = DEFAULT_MAX_LENGTH) {
     }
   }
 
-  output = selectShortWords(input, output, maxLength);
+  return selectShortWords(currentInput, output, maxLength);
+};
 
-  if (output.length <= maxLength) {
-    return output;
-  }
-
-  input = output;
+const applyRoadTypeBeginning = (currentOutput: string): string => {
+  let output = currentOutput;
 
   // 5bis - type de voie en début...
   for (const rule of rules[5]!) {
@@ -225,16 +230,25 @@ function normalizer(input: string, maxLength = DEFAULT_MAX_LENGTH) {
     );
   }
 
-  output = selectShortWords(input, output, maxLength);
+  return output;
+};
 
-  if (output.length <= maxLength) {
-    return output;
-  }
+const applyParticleReplacement = (currentOutput: string): string => {
+  let output = currentOutput;
 
   // 9 - remplacement des particules des noms propres pour ne pas les supprimer
   for (const rule of rules[9]!) {
     output = output.replace(new RegExp(rule.long), rule.short);
   }
+
+  return output;
+};
+
+const removeUppercaseArticles = (
+  currentOutput: string,
+  maxLength: number,
+): string => {
+  let output = currentOutput;
 
   // 10 - élimination des articles
   for (let step = 0; step < 6; step++) {
@@ -248,8 +262,17 @@ function normalizer(input: string, maxLength = DEFAULT_MAX_LENGTH) {
     }
   }
 
+  return output;
+};
+
+const applyResidualAbbreviations = (
+  currentOutput: string,
+  maxLength: number,
+): string => {
+  let output = currentOutput;
+
   // 11 - abréviations résiduelle
-  words = output.split(' ');
+  const words = output.split(' ');
 
   for (let i = 1; i < words.length - 1; ++i) {
     const word = words[i];
@@ -257,7 +280,7 @@ function normalizer(input: string, maxLength = DEFAULT_MAX_LENGTH) {
     if (
       word === word!.toUpperCase() &&
       word.length > 1 &&
-      word.charCodeAt(0) >= 'A'.charCodeAt(0)
+      word.codePointAt(0)! >= 'A'.codePointAt(0)!
     ) {
       words[i] = word[0]!;
 
@@ -268,6 +291,15 @@ function normalizer(input: string, maxLength = DEFAULT_MAX_LENGTH) {
       }
     }
   }
+
+  return output;
+};
+
+const removeLowercaseArticles = (
+  currentOutput: string,
+  maxLength: number,
+): string => {
+  let output = currentOutput;
 
   // 12 - élimination des articles
   for (let step = 0; step < 4; step++) {
@@ -282,8 +314,147 @@ function normalizer(input: string, maxLength = DEFAULT_MAX_LENGTH) {
   }
 
   return output;
-}
+};
 
-export function normalize(input: string, maxLength = DEFAULT_MAX_LENGTH) {
+const applyInitialSteps = (
+  input: string,
+  maxLength: number,
+): { output: string; currentInput: string } => {
+  let output = input;
+  let currentInput = input;
+
+  // Step 1: Road type abbreviations
+  output = applyRoadTypeAbbreviations(currentInput, output, maxLength);
+
+  if (output.length <= maxLength) {
+    return { output, currentInput };
+  }
+
+  currentInput = output;
+
+  // Step 2: Title abbreviations
+  output = applyTitleAbbreviations(currentInput, output, maxLength);
+
+  if (output.length <= maxLength) {
+    return { output, currentInput };
+  }
+
+  currentInput = output;
+
+  // Step 3: General abbreviations
+  output = applyGeneralAbbreviations(currentInput, output, maxLength);
+
+  if (output.length <= maxLength) {
+    return { output, currentInput };
+  }
+
+  currentInput = output;
+
+  return { output, currentInput };
+};
+
+const applyMiddleSteps = (
+  input: string,
+  currentInput: string,
+  maxLength: number,
+): { output: string; currentInput: string } => {
+  let output = input;
+  let updatedInput = currentInput;
+
+  // Step 4: Road type abbreviations bis
+  output = applyRoadTypeAbbreviationsBis(updatedInput, output, maxLength);
+
+  if (output.length <= maxLength) {
+    return { output, currentInput: updatedInput };
+  }
+
+  updatedInput = output;
+
+  // Step 5: First name abbreviations
+  output = applyFirstNameAbbreviations(updatedInput, output, maxLength);
+
+  if (output.length <= maxLength) {
+    return { output, currentInput: updatedInput };
+  }
+
+  updatedInput = output;
+
+  // Step 6: Saint abbreviations
+  output = applySaintAbbreviations(updatedInput, output, maxLength);
+
+  if (output.length <= maxLength) {
+    return { output, currentInput: updatedInput };
+  }
+
+  return { output, currentInput: updatedInput };
+};
+
+const applyFinalSteps = (output: string, maxLength: number): string => {
+  let result = output;
+
+  // Step 7: Road type at beginning
+  result = applyRoadTypeBeginning(result);
+
+  if (result.length <= maxLength) {
+    return result;
+  }
+
+  // Step 8: Particle replacement
+  result = applyParticleReplacement(result);
+
+  // Step 9: Remove uppercase articles
+  result = removeUppercaseArticles(result, maxLength);
+
+  if (result.length <= maxLength) {
+    return result;
+  }
+
+  // Step 10: Residual abbreviations
+  result = applyResidualAbbreviations(result, maxLength);
+
+  if (result.length <= maxLength) {
+    return result;
+  }
+
+  // Step 11: Remove lowercase articles
+  result = removeLowercaseArticles(result, maxLength);
+
+  return result;
+};
+
+const normalizer = (
+  originalInput: string,
+  maxLength = DEFAULT_MAX_LENGTH,
+): string => {
+  const input = preprocessInput(originalInput);
+  const output = input;
+
+  if (output.length <= maxLength) {
+    return output;
+  }
+
+  const initialResult = applyInitialSteps(output, maxLength);
+
+  if (initialResult.output.length <= maxLength) {
+    return initialResult.output;
+  }
+
+  const middleResult = applyMiddleSteps(
+    initialResult.output,
+    initialResult.currentInput,
+    maxLength,
+  );
+
+  if (middleResult.output.length <= maxLength) {
+    return middleResult.output;
+  }
+
+  return applyFinalSteps(middleResult.output, maxLength);
+};
+
+export const normalize = (
+  input: string,
+  maxLength = DEFAULT_MAX_LENGTH,
+): string => {
   return normalizer(input, maxLength).toUpperCase();
-}
+};
