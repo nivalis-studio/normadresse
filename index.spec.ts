@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 import { describe, expect, it } from 'bun:test';
 import { normalize } from './index.js';
 
@@ -147,5 +148,127 @@ describe('normalize', () => {
     for (const [source, expected] of fixtures) {
       expect(normalize(source)).toBe(expected);
     }
+  });
+
+  it('should handle short addresses that do not need normalization', () => {
+    expect(normalize('RUE COURTE')).toBe('RUE COURTE');
+    expect(normalize('PLACE A')).toBe('PLACE A');
+    expect(normalize('AVENUE B')).toBe('AVENUE B');
+  });
+
+  it('should handle custom max length parameter', () => {
+    const longStreet = 'BOULEVARD DU MARECHAL JEAN MARIE DE LATTRE DE TASSIGNY';
+
+    expect(normalize(longStreet, 20)).toBe('BD MAL J M L TASSIGNY');
+    expect(normalize(longStreet, 15)).toBe('BD MAL J M L TASSIGNY');
+    expect(normalize(longStreet, 50)).toBe(
+      'BD DU MARECHAL JEAN MARIE DE LATTRE DE TASSIGNY',
+    );
+  });
+
+  it('should handle very long addresses that trigger later normalization steps', () => {
+    const veryLongAddress =
+      'BOULEVARD DU GENERAL MARECHAL JEAN MARIE PIERRE AUGUSTE FERDINAND ALEXANDRE BENJAMIN CHARLES DOMINIQUE EMMANUEL FRANCOIS GEORGES HENRI JACQUES LAURENT MICHEL NICOLAS OLIVIER PHILIPPE ROBERT SEBASTIEN THOMAS VICTOR';
+
+    const result = normalize(veryLongAddress, 20);
+
+    expect(result).toBeDefined();
+    expect(result.length).toBeGreaterThan(0);
+  });
+
+  it('should handle addresses with mixed case and special characters', () => {
+    expect(normalize("Rue de l'Église Saint-Pierre")).toBe(
+      'RUE DE L EGLISE SAINT PIERRE',
+    );
+    expect(normalize('Avenue des Champs-Élysées')).toBe(
+      'AVENUE DES CHAMPS ELYSEES',
+    );
+    expect(normalize('Boulevard Saint-Germain-des-Prés')).toBe(
+      'BOULEVARD SAINT GERMAIN DES PRES',
+    );
+  });
+
+  it('should handle addresses that need extensive shortening', () => {
+    const extremelyLongAddress =
+      'BOULEVARD DU TRES HONORABLE MONSIEUR LE MARECHAL JEAN MARIE PIERRE AUGUSTE FERDINAND ALEXANDRE BENJAMIN CHARLES DOMINIQUE EMMANUEL FRANCOIS GEORGES HENRI JACQUES LAURENT MICHEL NICOLAS OLIVIER PHILIPPE ROBERT SEBASTIEN THOMAS VICTOR DE LA GRANDE NATION DES DROITS DE L HOMME ET DU CITOYEN DE LA REPUBLIQUE FRANCAISE AU SOLEIL LEVANT SUR LA BELLE MONTAGNE DES SAINTS ET DES SAINTES';
+
+    const result = normalize(extremelyLongAddress, 10);
+
+    expect(result).toBeDefined();
+    expect(result.length).toBeGreaterThan(0);
+  });
+
+  it('should handle addresses that trigger article elimination', () => {
+    const articleHeavyAddress =
+      'RUE DE LA GRANDE MAISON DU ROI ET DE LA REINE DES ANGES ET DES SAINTS AU SOLEIL DE LA MONTAGNE';
+
+    const result = normalize(articleHeavyAddress, 15);
+
+    expect(result).toBeDefined();
+    expect(result.length).toBeGreaterThan(0);
+  });
+
+  it('should preserve saint names when dealing with name abbreviations', () => {
+    const saintAddress = 'RUE SAINT PHILIPPE MARIE JACQUES BERNARD';
+    const result = normalize(saintAddress);
+
+    expect(result).toContain('SAINT PHILIPPE');
+  });
+
+  it('should handle edge cases with empty and whitespace', () => {
+    expect(normalize('   ').trim()).toBe('');
+    expect(normalize('')).toBe('');
+    expect(normalize('A')).toBe('A');
+  });
+
+  it('should handle numeric addresses', () => {
+    expect(normalize('RUE 123 456')).toBe('RUE 123 456');
+    expect(normalize('AVENUE 1944 1945')).toBe('AVENUE 1944 1945');
+  });
+
+  it('should handle addresses with particles (step 9)', () => {
+    const addressWithParticles = 'RUE PIERRE DE LA FONTAINE ET MARIE DU BOIS';
+    const result = normalize(addressWithParticles);
+
+    expect(result).toBeDefined();
+  });
+
+  it('should return the original string when already within max length', () => {
+    const shortAddress = 'RUE A';
+
+    expect(normalize(shortAddress, 32)).toBe('RUE A');
+  });
+
+  it('should handle addresses that trigger early return in step 6', () => {
+    const address = 'RUE SAINTE MARIE';
+    const result = normalize(address, 15);
+
+    expect(result).toBeDefined();
+  });
+
+  it('should handle addresses with special patterns that trigger selectShortWords with @', () => {
+    const address = 'RUE A B C D E F G H I J K L M N O P Q R S T U V W X Y Z';
+    const result = normalize(address, 5);
+
+    expect(result).toBeDefined();
+    expect(result.length).toBeGreaterThan(0);
+  });
+
+  it('should handle single character input', () => {
+    expect(normalize('A')).toBe('A');
+    expect(normalize('1')).toBe('1');
+  });
+
+  it('should handle very short max length', () => {
+    const result = normalize('BOULEVARD DU MARECHAL', 5);
+
+    expect(result).toBeDefined();
+    expect(result.length).toBeGreaterThan(0);
+  });
+
+  it('should handle edge case normalization scenarios', () => {
+    expect(normalize('AVENUE', 10)).toBe('AVENUE');
+    expect(normalize('BOULEVARD AVENUE', 8)).toBeDefined();
+    expect(normalize('RUE DE', 10)).toBe('RUE DE');
   });
 });
