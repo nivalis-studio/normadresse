@@ -26,7 +26,7 @@ type Rules = {
 
 let cachedRules: Rules | null = null;
 
-const SPECIAL_CHARS_PATTERN = /[^A-Z0-9\s]/g;
+const SPECIAL_CHARS_PATTERN = /[^A-Z0-9 ]/g;
 const MULTIPLE_SPACES_PATTERN = /\s{2,}/g;
 const UPPERCASE_ARTICLES_PATTERN =
   / (?:LE|LA|LES|AU|AUX|DE|DU|DES|[DAL]|ET|SUR|EN) /;

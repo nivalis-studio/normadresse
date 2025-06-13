@@ -188,6 +188,15 @@ describe('normalize', () => {
     );
   });
 
+  it('should handle addresses with newline characters', () => {
+    expect(normalize('RUE DE LA\nPAIX')).toBe('RUE DE LA PAIX');
+    expect(normalize('BOULEVARD\nDU MARECHAL\nJEAN MARIE')).toBe(
+      'BOULEVARD DU MARECHAL JEAN MARIE',
+    );
+    expect(normalize('AVENUE\n\nDES CHAMPS')).toBe('AVENUE DES CHAMPS');
+    expect(normalize('\nRUE DE LA LIBERTE\n')).toBe('RUE DE LA LIBERTE');
+  });
+
   it('should handle addresses that need extensive shortening', () => {
     const extremelyLongAddress =
       'BOULEVARD DU TRES HONORABLE MONSIEUR LE MARECHAL JEAN MARIE PIERRE AUGUSTE FERDINAND ALEXANDRE BENJAMIN CHARLES DOMINIQUE EMMANUEL FRANCOIS GEORGES HENRI JACQUES LAURENT MICHEL NICOLAS OLIVIER PHILIPPE ROBERT SEBASTIEN THOMAS VICTOR DE LA GRANDE NATION DES DROITS DE L HOMME ET DU CITOYEN DE LA REPUBLIQUE FRANCAISE AU SOLEIL LEVANT SUR LA BELLE MONTAGNE DES SAINTS ET DES SAINTES';
