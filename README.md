@@ -3,7 +3,7 @@
 > French Postal Addresses Normalizer
 
 [![npm version](https://badgen.net/npm/v/@nivalis/normadresse)](https://www.npmjs.com/package/@nivalis/normadresse)
-[![dependencies Status](https://img.shields.io/librariesio/release/npm/%40nivalis%2Fnormadresse)
+[![dependencies Status](https://img.shields.io/librariesio/release/npm/%40nivalis%2Fnormadresse)](https://img.shields.io/librariesio/release/npm/%40nivalis%2Fnormadresse)
 
 ## Getting started
 
