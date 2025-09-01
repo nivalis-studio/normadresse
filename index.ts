@@ -51,10 +51,10 @@ const compileRules = (): Rules => {
   if (cachedRules) return cachedRules;
 
   const csvContent = readFileSync(findCsvFile(), 'utf8');
-  const parsed = parse(csvContent, {
+  const parsed: CsvRule[] = parse(csvContent, {
     columns: true,
     skip_empty_lines: true,
-  }) as CsvRule[];
+  });
 
   const rules = parsed.reduce<Rules>((acc: Rules, rule: CsvRule) => {
     const step = Number.parseFloat(rule.etape);
