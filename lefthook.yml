@@ -1,11 +1,17 @@
 commit-msg:
   commands:
     commitlint:
-      run: bun commitlint --edit
+      run: npx commitlint --edit
 pre-commit:
   jobs:
-    - run: bun eslint --fix {staged_files}
+    - run:
+        npx biome check --write --no-errors-on-unmatched
+        --files-ignore-unknown=true --colors=off {staged_files}
       glob:
+        - "*.cjs"
+        - "*.mjs"
+        - "*.d.cts"
+        - "*.d.mts"
         - "*.js"
         - "*.jsx"
         - "*.ts"
