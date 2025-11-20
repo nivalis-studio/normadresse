@@ -12,7 +12,7 @@ type CsvRule = {
   option: string;
 };
 
-const RULES_DATA: CsvRule[] = [
+const RULES_DATA: Array<CsvRule> = [
   { etape: '1', long: 'ALLEE ', court: 'all ', option: '' },
   { etape: '1', long: 'AVENUE ', court: 'av ', option: '' },
   { etape: '1', long: 'BOULEVARD ', court: 'bd ', option: '' },
@@ -588,7 +588,7 @@ type CompiledRule = {
 };
 
 type Rules = {
-  [key: number]: CompiledRule[];
+  [key: number]: Array<CompiledRule>;
 };
 
 let cachedRules: Rules | null = null;
