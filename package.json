@@ -32,7 +32,7 @@
 		"ts": "tsc",
 		"build": "tsdown",
 		"prepack": "tsdown",
-		"prepare": "bunx lefthook install"
+		"prepare": "lefthook install"
 	},
 	"files": ["dist", "package.json", "README.md"],
 	"dependencies": {
