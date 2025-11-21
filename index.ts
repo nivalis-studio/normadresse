@@ -1,8 +1,3 @@
-/* eslint-disable @typescript-eslint/no-magic-numbers */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-
-import { deburr } from 'es-toolkit/string';
-
 const DEFAULT_MAX_LENGTH = 32;
 
 type CsvRule = {
@@ -11,6 +6,76 @@ type CsvRule = {
   court: string;
   option: string;
 };
+
+const deburrMap = new Map<string, string>([
+  ['Æ', 'Ae'],
+  ['Ð', 'D'],
+  ['Ø', 'O'],
+  ['Þ', 'Th'],
+  ['ß', 'ss'],
+  ['æ', 'ae'],
+  ['ð', 'd'],
+  ['ø', 'o'],
+  ['þ', 'th'],
+  ['Đ', 'D'],
+  ['đ', 'd'],
+  ['Ħ', 'H'],
+  ['ħ', 'h'],
+  ['ı', 'i'],
+  ['Ĳ', 'IJ'],
+  ['ĳ', 'ij'],
+  ['ĸ', 'k'],
+  ['Ŀ', 'L'],
+  ['ŀ', 'l'],
+  ['Ł', 'L'],
+  ['ł', 'l'],
+  ['ŉ', "'n"],
+  ['Ŋ', 'N'],
+  ['ŋ', 'n'],
+  ['Œ', 'Oe'],
+  ['œ', 'oe'],
+  ['Ŧ', 'T'],
+  ['ŧ', 't'],
+  ['ſ', 's'],
+]);
+
+/**
+ * Converts a string by replacing special characters and diacritical marks with their ASCII equivalents.
+ * For example, "Crème brûlée" becomes "Creme brulee".
+ *
+ * @param {string} str_ - The input string to be deburred.
+ * @returns {string} - The deburred string with special characters replaced by their ASCII equivalents.
+ *
+ * @example
+ * // Basic usage:
+ * deburr('Æthelred') // returns 'Aethelred'
+ *
+ * @example
+ * // Handling diacritical marks:
+ * deburr('München') // returns 'Munchen'
+ *
+ * @example
+ * // Special characters:
+ * deburr('Crème brûlée') // returns 'Creme brulee'
+ */
+function deburr(str: string): string {
+  const str_ = str.normalize('NFD');
+
+  let result = '';
+
+  for (const char of str_) {
+    if (
+      (char >= '\u0300' && char <= '\u036f') ||
+      (char >= '\ufe20' && char <= '\ufe23')
+    ) {
+      continue;
+    }
+
+    result += deburrMap.get(char) ?? char;
+  }
+
+  return result;
+}
 
 const RULES_DATA: Array<CsvRule> = [
   { etape: '1', long: 'ALLEE ', court: 'all ', option: '' },
