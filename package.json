@@ -24,7 +24,7 @@
 	},
 	"license": "MIT",
 	"sideEffects": false,
-	"packageManager": "bun@1.2.23",
+	"packageManager": "pnpm@10.23.0",
 	"scripts": {
 		"test": "bun test",
 		"lint": "biome check",
