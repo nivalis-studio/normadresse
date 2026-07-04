@@ -77,6 +77,20 @@ function deburr(str: string): string {
   return result;
 }
 
+/**
+ * Abbreviation rules ported verbatim from the upstream Etalab dataset
+ * (etalab/normadresse). Rules are grouped by `etape` (step); `compileRules`
+ * parses `etape` with `parseFloat`, so fractional steps such as '1.0', '2.0',
+ * '4.0' and '5.0' merge into their integer group (1, 2, 4, 5) and ARE applied
+ * by the corresponding pipeline step.
+ *
+ * However, the groups '0' (single letters), '-4.0' (MARTYR), '1.5' (^CENTRE)
+ * and '7.0' (month abbreviations) are compiled but NEVER applied: no pipeline
+ * step reads them (the pipeline only uses groups 1, 2, 3, 4, 5, 6 and 9).
+ * This matches the upstream Python implementation, which also never applies
+ * these groups. They are intentionally retained — not deleted — to stay
+ * faithful to the upstream dataset and behavior. Zero runtime effect.
+ */
 const RULES_DATA: Array<CsvRule> = [
   { etape: '1', long: 'ALLEE ', court: 'all ', option: '' },
   { etape: '1', long: 'AVENUE ', court: 'av ', option: '' },
