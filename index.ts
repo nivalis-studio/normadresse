@@ -1,4 +1,4 @@
-import { type CsvRule, RULES_DATA } from './rules.ts';
+import { RULES_DATA } from './rules.ts';
 
 const DEFAULT_MAX_LENGTH = 32;
 
@@ -73,13 +73,38 @@ function deburr(str: string): string {
 }
 
 type CompiledRule = {
-  long: string;
   short: string;
-  pattern?: RegExp;
+  pattern: RegExp;
+};
+
+type RoadTypeRule = CompiledRule & {
+  /** ` ${long.trim()} ` — mid-string match used by the step-5 second pass. */
+  trimmedSpaced: RegExp;
+};
+
+type RoadTypeBisRule = {
+  short: string;
+  /** ` ${long.trim()} ` — mid-string match. */
+  trimmedSpaced: RegExp;
+  /** `^${long.trim()} ` — match at the beginning of the address. */
+  startAnchored: RegExp;
 };
 
 type Rules = {
-  [key: number]: Array<CompiledRule>;
+  /** Step 1 — `pattern` is the raw rule; replaces the first occurrence only. */
+  roadTypes: Array<RoadTypeRule>;
+  /** Step 2 — `pattern` is ` ${long} `. */
+  titles: Array<CompiledRule>;
+  /** Step 3 — `pattern` is `^(?:${long})$`, matched against whole words. */
+  firstNames: Array<CompiledRule>;
+  /** Step 4 — `pattern` is `(^| )${long} `. */
+  general: Array<CompiledRule>;
+  /** Step 5 — road type abbreviations. */
+  roadTypesBis: Array<RoadTypeBisRule>;
+  /** Step 6 — `pattern` is the raw rule. */
+  saints: Array<CompiledRule>;
+  /** Step 9 — `pattern` is the raw rule. */
+  particles: Array<CompiledRule>;
 };
 
 const SPECIAL_CHARS_PATTERN = /[^A-Z0-9 ]/g;
@@ -89,20 +114,75 @@ const UPPERCASE_ARTICLES_PATTERN =
 const LOWERCASE_ARTICLES_PATTERN =
   / (?:le|la|les|au|aux|de|du|des|[dal]|et|sur) /;
 
-const RULES: Rules = RULES_DATA.reduce<Rules>((acc: Rules, rule: CsvRule) => {
-  const step = Number.parseFloat(rule.etape);
-  const newRules = acc;
+const RULES: Rules = (() => {
+  const rules: Rules = {
+    roadTypes: [],
+    titles: [],
+    firstNames: [],
+    general: [],
+    roadTypesBis: [],
+    saints: [],
+    particles: [],
+  };
 
-  newRules[step] ??= [];
+  for (const rule of RULES_DATA) {
+    const step = Number.parseFloat(rule.etape);
+    const { long } = rule;
+    const short = rule.court.replaceAll(/\\g<(\d+)>/g, '$$$1');
 
-  newRules[step].push({
-    long: rule.long,
-    short: rule.court.replaceAll(/\\g<(\d+)>/g, '$$$1'),
-    pattern: step === 1 ? new RegExp(rule.long) : undefined,
-  });
+    switch (step) {
+      case 1: {
+        rules.roadTypes.push({
+          short,
+          pattern: new RegExp(long),
+          trimmedSpaced: new RegExp(` ${long.trim()} `),
+        });
+        break;
+      }
 
-  return newRules;
-}, {});
+      case 2: {
+        rules.titles.push({ short, pattern: new RegExp(` ${long} `) });
+        break;
+      }
+
+      case 3: {
+        rules.firstNames.push({ short, pattern: new RegExp(`^(?:${long})$`) });
+        break;
+      }
+
+      case 4: {
+        rules.general.push({ short, pattern: new RegExp(`(^| )${long} `) });
+        break;
+      }
+
+      case 5: {
+        rules.roadTypesBis.push({
+          short,
+          trimmedSpaced: new RegExp(` ${long.trim()} `),
+          startAnchored: new RegExp(`^${long.trim()} `),
+        });
+        break;
+      }
+
+      case 6: {
+        rules.saints.push({ short, pattern: new RegExp(long) });
+        break;
+      }
+
+      case 9: {
+        rules.particles.push({ short, pattern: new RegExp(long) });
+        break;
+      }
+
+      default: {
+        // Steps 0, 1.5 and 7 exist in the data but are never applied.
+        break;
+      }
+    }
+  }
+
+  return rules;
+})();
 
 const selectShortWords = (
   input: string,
@@ -155,12 +235,8 @@ const applyRoadTypeAbbreviations = (
 ): string => {
   let output = currentOutput;
 
-  for (const rule of RULES[1] ?? []) {
-    if (rule.pattern) {
-      output = output.replace(rule.pattern, rule.short);
-    } else {
-      output = output.replace(new RegExp(rule.long), rule.short);
-    }
+  for (const rule of RULES.roadTypes) {
+    output = output.replace(rule.pattern, rule.short);
   }
 
   return selectShortWords(currentInput, output, maxLength);
@@ -175,8 +251,8 @@ const applyTitleAbbreviations = (
 
   // 2 - abréviation des titres militaires, religieux et civils
   for (let step = 0; step < 2; step++) {
-    for (const rule of RULES[2] ?? []) {
-      output = output.replace(new RegExp(` ${rule.long} `), ` ${rule.short} `);
+    for (const rule of RULES.titles) {
+      output = output.replace(rule.pattern, ` ${rule.short} `);
     }
   }
 
@@ -192,12 +268,9 @@ const applyGeneralAbbreviations = (
 
   // 4 - abréviations générales
   for (let step = 0; step < 3; step++) {
-    for (const rule of RULES[4] ?? []) {
+    for (const rule of RULES.general) {
       output = output
-        .replace(
-          new RegExp(`(^| )${rule.long} `),
-          ` ${rule.short.toLowerCase()} `,
-        )
+        .replace(rule.pattern, ` ${rule.short.toLowerCase()} `)
         .trim();
     }
   }
@@ -214,16 +287,16 @@ const applyRoadTypeAbbreviationsBis = (
 
   // 5 - abréviation type de voies
   for (let step = 0; step < 2; step++) {
-    for (const rule of RULES[5] ?? []) {
+    for (const rule of RULES.roadTypesBis) {
       output = output.replace(
-        new RegExp(` ${rule.long.trim()} `),
+        rule.trimmedSpaced,
         ` ${rule.short.trim().toLowerCase()} `,
       );
     }
 
-    for (const rule of RULES[1] ?? []) {
+    for (const rule of RULES.roadTypes) {
       output = output.replace(
-        new RegExp(` ${rule.long.trim()} `),
+        rule.trimmedSpaced,
         ` ${rule.short.trim().toLowerCase()} `,
       );
     }
@@ -246,9 +319,9 @@ const applyFirstNameAbbreviations = (
     const word = words[i];
 
     if (!words[i - 1]?.startsWith('SAINT')) {
-      for (const rule of RULES[3] ?? []) {
+      for (const rule of RULES.firstNames) {
         // biome-ignore lint/style/noNonNullAssertion: checked earlier
-        if (new RegExp(`^(?:${rule.long})$`).test(word!)) {
+        if (rule.pattern.test(word!)) {
           words[i] = rule.short.toLowerCase();
         }
       }
@@ -269,8 +342,8 @@ const applySaintAbbreviations = (
 
   // 6 - abréviation saint/sainte et prolonge(e)/inférieur(e)
   for (let step = 0; step < 2; step++) {
-    for (const rule of RULES[6] ?? []) {
-      output = output.replace(new RegExp(rule.long), rule.short.toLowerCase());
+    for (const rule of RULES.saints) {
+      output = output.replace(rule.pattern, rule.short.toLowerCase());
     }
   }
 
@@ -285,9 +358,9 @@ const applyRoadTypeBeginning = (
   let output = currentOutput;
 
   // 5bis - type de voie en début...
-  for (const rule of RULES[5] ?? []) {
+  for (const rule of RULES.roadTypesBis) {
     output = output.replace(
-      new RegExp(`^${rule.long.trim()} `),
+      rule.startAnchored,
       `${rule.short.trim().toLowerCase()} `,
     );
   }
@@ -299,8 +372,8 @@ const applyParticleReplacement = (currentOutput: string): string => {
   let output = currentOutput;
 
   // 9 - remplacement des particules des noms propres pour ne pas les supprimer
-  for (const rule of RULES[9] ?? []) {
-    output = output.replace(new RegExp(rule.long), rule.short);
+  for (const rule of RULES.particles) {
+    output = output.replace(rule.pattern, rule.short);
   }
 
   return output;
