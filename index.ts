@@ -679,15 +679,7 @@ const compileRules = (): Rules => {
     let pattern: RegExp | undefined;
 
     if (step === 1) {
-      try {
-        pattern = new RegExp(rule.long, 'g');
-      } catch {
-        // Fallback for invalid regex patterns
-        pattern = new RegExp(
-          rule.long.replaceAll(/[.*+?^${}()|[\]\\]/g, '\\$&'),
-          'g',
-        );
-      }
+      pattern = new RegExp(rule.long, 'g');
     }
 
     newRules[step].push({
