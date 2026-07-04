@@ -268,6 +268,16 @@ describe('normalize', () => {
     expect(normalize('1')).toBe('1');
   });
 
+  it('should return a single word longer than max length unchanged', () => {
+    expect(normalize('ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJ')).toBe(
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJ',
+    );
+  });
+
+  it('should return a single word longer than a custom max length unchanged', () => {
+    expect(normalize('ABCDEFGHIJKLMNOP', 10)).toBe('ABCDEFGHIJKLMNOP');
+  });
+
   it('should handle very short max length', () => {
     const result = normalize('BOULEVARD DU MARECHAL', 5);
 

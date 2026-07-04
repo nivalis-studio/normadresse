@@ -724,7 +724,7 @@ const selectShortWords = (
     }
   }
 
-  let next = '';
+  let next = output;
 
   for (let i = 1; i < short.length; ++i) {
     next = [
