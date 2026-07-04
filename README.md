@@ -102,7 +102,7 @@ rule.
 pnpm install       # install dependencies
 pnpm test          # run the Bun-powered test suite
 pnpm lint          # biome static analysis
-pnpm build         # compile TypeScript via tsdown
+pnpm build         # compile TypeScript via zshy
 ```
 
 ## See also

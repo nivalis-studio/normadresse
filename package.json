@@ -17,7 +17,6 @@
 		"url": "https://github.com/nivalis-studio/normadresse/issues"
 	},
 	"scripts": {
-		"dev": "bun run --watch src/index.tsx",
 		"lint": "biome check",
 		"lint:fix": "biome check --write",
 		"test": "bun test",
@@ -27,9 +26,6 @@
 		"ts": "tsc --noEmit --incremental"
 	},
 	"dependencies": {},
-	"peerDependencies": {
-		"typescript": "^5"
-	},
 	"devDependencies": {
 		"@biomejs/biome": "2.4.4",
 		"@commitlint/cli": "20.4.2",
