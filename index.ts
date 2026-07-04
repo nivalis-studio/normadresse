@@ -853,7 +853,7 @@ const applyFirstNameAbbreviations = (
     if (!words[i - 1]?.startsWith('SAINT')) {
       for (const rule of rules[3] ?? []) {
         // biome-ignore lint/style/noNonNullAssertion: checked earlier
-        if (new RegExp(rule.long).test(word!)) {
+        if (new RegExp(`^(?:${rule.long})$`).test(word!)) {
           words[i] = rule.short.toLowerCase();
         }
       }
