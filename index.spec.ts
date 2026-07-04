@@ -150,6 +150,15 @@ describe('normalize', () => {
     }
   });
 
+  it('should abbreviate only the first occurrence of a road type at step 1', () => {
+    // Step 1 (road-type abbreviation) must replace the first occurrence only,
+    // matching js-normadresse. The mid-string 'PLACE' is left intact and the
+    // remaining shortening comes from general abbreviations (GRANDE -> GDE).
+    expect(normalize('PLACE DE LA GRANDE PLACE ROUGE', 25)).toBe(
+      'PL DE LA GDE PLACE ROUGE',
+    );
+  });
+
   it('should handle short addresses that do not need normalization', () => {
     expect(normalize('RUE COURTE')).toBe('RUE COURTE');
     expect(normalize('PLACE A')).toBe('PLACE A');

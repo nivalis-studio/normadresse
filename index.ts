@@ -680,12 +680,11 @@ const compileRules = (): Rules => {
 
     if (step === 1) {
       try {
-        pattern = new RegExp(rule.long, 'g');
+        pattern = new RegExp(rule.long);
       } catch {
         // Fallback for invalid regex patterns
         pattern = new RegExp(
           rule.long.replaceAll(/[.*+?^${}()|[\]\\]/g, '\\$&'),
-          'g',
         );
       }
     }
