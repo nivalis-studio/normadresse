@@ -656,8 +656,6 @@ type Rules = {
   [key: number]: Array<CompiledRule>;
 };
 
-let cachedRules: Rules | null = null;
-
 const SPECIAL_CHARS_PATTERN = /[^A-Z0-9 ]/g;
 const MULTIPLE_SPACES_PATTERN = /\s{2,}/g;
 const UPPERCASE_ARTICLES_PATTERN =
@@ -666,11 +664,7 @@ const LOWERCASE_ARTICLES_PATTERN =
   / (?:le|la|les|au|aux|de|du|des|[dal]|et|sur) /;
 
 const compileRules = (): Rules => {
-  if (cachedRules) {
-    return cachedRules;
-  }
-
-  const rules = RULES_DATA.reduce<Rules>((acc: Rules, rule: CsvRule) => {
+  return RULES_DATA.reduce<Rules>((acc: Rules, rule: CsvRule) => {
     const step = Number.parseFloat(rule.etape);
     const newRules = acc;
 
@@ -698,11 +692,9 @@ const compileRules = (): Rules => {
 
     return newRules;
   }, {});
-
-  cachedRules = rules;
-
-  return rules;
 };
+
+const RULES = compileRules();
 
 const selectShortWords = (
   input: string,
@@ -753,7 +745,7 @@ const applyRoadTypeAbbreviations = (
   currentOutput: string,
   maxLength: number,
 ): string => {
-  const rules = compileRules();
+  const rules = RULES;
   let output = currentOutput;
 
   for (const rule of rules[1] ?? []) {
@@ -772,7 +764,7 @@ const applyTitleAbbreviations = (
   currentOutput: string,
   maxLength: number,
 ): string => {
-  const rules = compileRules();
+  const rules = RULES;
   let output = currentOutput;
 
   // 2 - abréviation des titres militaires, religieux et civils
@@ -790,7 +782,7 @@ const applyGeneralAbbreviations = (
   currentOutput: string,
   maxLength: number,
 ): string => {
-  const rules = compileRules();
+  const rules = RULES;
   let output = currentOutput;
 
   // 4 - abréviations générales
@@ -813,7 +805,7 @@ const applyRoadTypeAbbreviationsBis = (
   currentOutput: string,
   maxLength: number,
 ): string => {
-  const rules = compileRules();
+  const rules = RULES;
   let output = currentOutput;
 
   // 5 - abréviation type de voies
@@ -841,7 +833,7 @@ const applyFirstNameAbbreviations = (
   currentOutput: string,
   maxLength: number,
 ): string => {
-  const rules = compileRules();
+  const rules = RULES;
   let output = currentOutput;
 
   // 3 - abréviations prénoms sauf pour ST prénoms
@@ -870,7 +862,7 @@ const applySaintAbbreviations = (
   currentOutput: string,
   maxLength: number,
 ): string => {
-  const rules = compileRules();
+  const rules = RULES;
   let output = currentOutput;
 
   // 6 - abréviation saint/sainte et prolonge(e)/inférieur(e)
@@ -888,7 +880,7 @@ const applyRoadTypeBeginning = (
   currentOutput: string,
   maxLength: number,
 ): string => {
-  const rules = compileRules();
+  const rules = RULES;
   let output = currentOutput;
 
   // 5bis - type de voie en début...
@@ -903,7 +895,7 @@ const applyRoadTypeBeginning = (
 };
 
 const applyParticleReplacement = (currentOutput: string): string => {
-  const rules = compileRules();
+  const rules = RULES;
   let output = currentOutput;
 
   // 9 - remplacement des particules des noms propres pour ne pas les supprimer
@@ -1132,8 +1124,4 @@ export const normalize = (
   maxLength = DEFAULT_MAX_LENGTH,
 ): string => {
   return normalizer(input, maxLength).toUpperCase();
-};
-
-export const clearRulesCache = (): void => {
-  cachedRules = null;
 };
