@@ -89,7 +89,7 @@ input (even across platforms) always yields the same output.
 
 ## Data source & contributions
 
-The rules live in [`index.ts`](./index.ts) and originate from Etalab's
+The rules live in [`rules.ts`](./rules.ts) and originate from Etalab's
 [`normadresse`](https://github.com/etalab/normadresse) project as well as the
 [`js-normadresse`](https://github.com/BaseAdresseNationale/js-normadresse)
 port. If you notice a discrepancy with the official BAN output, please open an
