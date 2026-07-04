@@ -84,7 +84,8 @@ function deburr(str: string): string {
  * '4.0' and '5.0' merge into their integer group (1, 2, 4, 5) and ARE applied
  * by the corresponding pipeline step.
  *
- * However, the groups '0' (single letters), '-4.0' (MARTYR), '1.5' (^CENTRE)
+ * However, the groups '0' (PROLONGE / TERRE PLEIN / INFERIEUR), '-4.0'
+ * (MARTYR), '1.5' (^CENTRE)
  * and '7.0' (month abbreviations) are compiled but NEVER applied: no pipeline
  * step reads them (the pipeline only uses groups 1, 2, 3, 4, 5, 6 and 9).
  * This matches the upstream Python implementation, which also never applies
