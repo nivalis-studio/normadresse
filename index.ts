@@ -98,7 +98,7 @@ const RULES: Rules = RULES_DATA.reduce<Rules>((acc: Rules, rule: CsvRule) => {
   newRules[step].push({
     long: rule.long,
     short: rule.court.replaceAll(/\\g<(\d+)>/g, '$$$1'),
-    pattern: step === 1 ? new RegExp(rule.long, 'g') : undefined,
+    pattern: step === 1 ? new RegExp(rule.long) : undefined,
   });
 
   return newRules;
