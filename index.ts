@@ -82,8 +82,6 @@ type Rules = {
   [key: number]: Array<CompiledRule>;
 };
 
-let cachedRules: Rules | null = null;
-
 const SPECIAL_CHARS_PATTERN = /[^A-Z0-9 ]/g;
 const MULTIPLE_SPACES_PATTERN = /\s{2,}/g;
 const UPPERCASE_ARTICLES_PATTERN =
@@ -91,44 +89,20 @@ const UPPERCASE_ARTICLES_PATTERN =
 const LOWERCASE_ARTICLES_PATTERN =
   / (?:le|la|les|au|aux|de|du|des|[dal]|et|sur) /;
 
-const compileRules = (): Rules => {
-  if (cachedRules) {
-    return cachedRules;
-  }
+const RULES: Rules = RULES_DATA.reduce<Rules>((acc: Rules, rule: CsvRule) => {
+  const step = Number.parseFloat(rule.etape);
+  const newRules = acc;
 
-  const rules = RULES_DATA.reduce<Rules>((acc: Rules, rule: CsvRule) => {
-    const step = Number.parseFloat(rule.etape);
-    const newRules = acc;
+  newRules[step] ??= [];
 
-    newRules[step] ??= [];
+  newRules[step].push({
+    long: rule.long,
+    short: rule.court.replaceAll(/\\g<(\d+)>/g, '$$$1'),
+    pattern: step === 1 ? new RegExp(rule.long, 'g') : undefined,
+  });
 
-    let pattern: RegExp | undefined;
-
-    if (step === 1) {
-      try {
-        pattern = new RegExp(rule.long, 'g');
-      } catch {
-        // Fallback for invalid regex patterns
-        pattern = new RegExp(
-          rule.long.replaceAll(/[.*+?^${}()|[\]\\]/g, '\\$&'),
-          'g',
-        );
-      }
-    }
-
-    newRules[step].push({
-      long: rule.long,
-      short: rule.court.replaceAll(/\\g<(\d+)>/g, '$$$1'),
-      pattern,
-    });
-
-    return newRules;
-  }, {});
-
-  cachedRules = rules;
-
-  return rules;
-};
+  return newRules;
+}, {});
 
 const selectShortWords = (
   input: string,
@@ -179,10 +153,9 @@ const applyRoadTypeAbbreviations = (
   currentOutput: string,
   maxLength: number,
 ): string => {
-  const rules = compileRules();
   let output = currentOutput;
 
-  for (const rule of rules[1] ?? []) {
+  for (const rule of RULES[1] ?? []) {
     if (rule.pattern) {
       output = output.replace(rule.pattern, rule.short);
     } else {
@@ -198,12 +171,11 @@ const applyTitleAbbreviations = (
   currentOutput: string,
   maxLength: number,
 ): string => {
-  const rules = compileRules();
   let output = currentOutput;
 
   // 2 - abréviation des titres militaires, religieux et civils
   for (let step = 0; step < 2; step++) {
-    for (const rule of rules[2] ?? []) {
+    for (const rule of RULES[2] ?? []) {
       output = output.replace(new RegExp(` ${rule.long} `), ` ${rule.short} `);
     }
   }
@@ -216,12 +188,11 @@ const applyGeneralAbbreviations = (
   currentOutput: string,
   maxLength: number,
 ): string => {
-  const rules = compileRules();
   let output = currentOutput;
 
   // 4 - abréviations générales
   for (let step = 0; step < 3; step++) {
-    for (const rule of rules[4] ?? []) {
+    for (const rule of RULES[4] ?? []) {
       output = output
         .replace(
           new RegExp(`(^| )${rule.long} `),
@@ -239,19 +210,18 @@ const applyRoadTypeAbbreviationsBis = (
   currentOutput: string,
   maxLength: number,
 ): string => {
-  const rules = compileRules();
   let output = currentOutput;
 
   // 5 - abréviation type de voies
   for (let step = 0; step < 2; step++) {
-    for (const rule of rules[5] ?? []) {
+    for (const rule of RULES[5] ?? []) {
       output = output.replace(
         new RegExp(` ${rule.long.trim()} `),
         ` ${rule.short.trim().toLowerCase()} `,
       );
     }
 
-    for (const rule of rules[1] ?? []) {
+    for (const rule of RULES[1] ?? []) {
       output = output.replace(
         new RegExp(` ${rule.long.trim()} `),
         ` ${rule.short.trim().toLowerCase()} `,
@@ -267,7 +237,6 @@ const applyFirstNameAbbreviations = (
   currentOutput: string,
   maxLength: number,
 ): string => {
-  const rules = compileRules();
   let output = currentOutput;
 
   // 3 - abréviations prénoms sauf pour ST prénoms
@@ -277,9 +246,9 @@ const applyFirstNameAbbreviations = (
     const word = words[i];
 
     if (!words[i - 1]?.startsWith('SAINT')) {
-      for (const rule of rules[3] ?? []) {
+      for (const rule of RULES[3] ?? []) {
         // biome-ignore lint/style/noNonNullAssertion: checked earlier
-        if (new RegExp(rule.long).test(word!)) {
+        if (new RegExp(`^(?:${rule.long})$`).test(word!)) {
           words[i] = rule.short.toLowerCase();
         }
       }
@@ -296,12 +265,11 @@ const applySaintAbbreviations = (
   currentOutput: string,
   maxLength: number,
 ): string => {
-  const rules = compileRules();
   let output = currentOutput;
 
   // 6 - abréviation saint/sainte et prolonge(e)/inférieur(e)
   for (let step = 0; step < 2; step++) {
-    for (const rule of rules[6] ?? []) {
+    for (const rule of RULES[6] ?? []) {
       output = output.replace(new RegExp(rule.long), rule.short.toLowerCase());
     }
   }
@@ -314,11 +282,10 @@ const applyRoadTypeBeginning = (
   currentOutput: string,
   maxLength: number,
 ): string => {
-  const rules = compileRules();
   let output = currentOutput;
 
   // 5bis - type de voie en début...
-  for (const rule of rules[5] ?? []) {
+  for (const rule of RULES[5] ?? []) {
     output = output.replace(
       new RegExp(`^${rule.long.trim()} `),
       `${rule.short.trim().toLowerCase()} `,
@@ -329,11 +296,10 @@ const applyRoadTypeBeginning = (
 };
 
 const applyParticleReplacement = (currentOutput: string): string => {
-  const rules = compileRules();
   let output = currentOutput;
 
   // 9 - remplacement des particules des noms propres pour ne pas les supprimer
-  for (const rule of rules[9] ?? []) {
+  for (const rule of RULES[9] ?? []) {
     output = output.replace(new RegExp(rule.long), rule.short);
   }
 
@@ -558,8 +524,4 @@ export const normalize = (
   maxLength = DEFAULT_MAX_LENGTH,
 ): string => {
   return normalizer(input, maxLength).toUpperCase();
-};
-
-export const clearRulesCache = (): void => {
-  cachedRules = null;
 };

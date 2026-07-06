@@ -64,12 +64,6 @@ Returns the normalized uppercase address. When the input already fits in the
 requested length, the string is merely sanitized (trimmed, deduplicated spaces,
 and diacritics removed).
 
-### `clearRulesCache(): void`
-
-The rule set is compiled once and cached. Call `clearRulesCache()` in test suites
-when you need to isolate scenarios that alter the global state (for instance
-when spying on `RegExp` creation).
-
 ## Normalization pipeline
 
 The implementation follows the historical Etalab steps:
