@@ -233,6 +233,18 @@ describe('normalize', () => {
     expect(result).toContain('SAINT PHILIPPE');
   });
 
+  it('should not abbreviate words that merely contain a first name (step 3)', () => {
+    // PAULINE contains PAUL but is not the first name PAUL itself; the
+    // Etalab reference anchors the first-name match to the whole word.
+    expect(normalize('RUE PAULINE REVERDY DES LILAS BLANCS')).toBe(
+      'RUE PAULINE REVERDY LILAS BLANCS',
+    );
+    // JEANNETTE contains JEAN but must not be crushed to J.
+    expect(normalize('ALLEE JEANNETTE MARTIN ET DE LA RESISTANCE')).toBe(
+      'ALL JEANNETTE M DE LA RESISTANCE',
+    );
+  });
+
   it('should handle edge cases with empty and whitespace', () => {
     expect(normalize('   ').trim()).toBe('');
     expect(normalize('')).toBe('');
