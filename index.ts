@@ -691,24 +691,10 @@ const compileRules = (): Rules => {
 
     newRules[step] ??= [];
 
-    let pattern: RegExp | undefined;
-
-    if (step === 1) {
-      try {
-        pattern = new RegExp(rule.long, 'g');
-      } catch {
-        // Fallback for invalid regex patterns
-        pattern = new RegExp(
-          rule.long.replaceAll(/[.*+?^${}()|[\]\\]/g, '\\$&'),
-          'g',
-        );
-      }
-    }
-
     newRules[step].push({
       long: rule.long,
       short: rule.court.replaceAll(/\\g<(\d+)>/g, '$$$1'),
-      pattern,
+      pattern: step === 1 ? new RegExp(rule.long, 'g') : undefined,
     });
 
     return newRules;
