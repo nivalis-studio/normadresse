@@ -77,6 +77,21 @@ function deburr(str: string): string {
   return result;
 }
 
+/**
+ * Abbreviation rules ported verbatim from the upstream Etalab dataset
+ * (etalab/normadresse). Rules are grouped by `etape` (step); `compileRules`
+ * parses `etape` with `parseFloat`, so fractional steps such as '1.0', '2.0',
+ * '4.0' and '5.0' merge into their integer group (1, 2, 4, 5) and ARE applied
+ * by the corresponding pipeline step.
+ *
+ * However, the groups '0' (PROLONGE / TERRE PLEIN / INFERIEUR), '-4.0'
+ * (MARTYR), '1.5' (^CENTRE)
+ * and '7.0' (month abbreviations) are compiled but NEVER applied: no pipeline
+ * step reads them (the pipeline only uses groups 1, 2, 3, 4, 5, 6 and 9).
+ * This matches the upstream Python implementation, which also never applies
+ * these groups. They are intentionally retained — not deleted — to stay
+ * faithful to the upstream dataset and behavior. Zero runtime effect.
+ */
 const RULES_DATA: Array<CsvRule> = [
   { etape: '1', long: 'ALLEE ', court: 'all ', option: '' },
   { etape: '1', long: 'AVENUE ', court: 'av ', option: '' },
@@ -670,24 +685,10 @@ const compileRules = (): Rules => {
 
     newRules[step] ??= [];
 
-    let pattern: RegExp | undefined;
-
-    if (step === 1) {
-      try {
-        pattern = new RegExp(rule.long, 'g');
-      } catch {
-        // Fallback for invalid regex patterns
-        pattern = new RegExp(
-          rule.long.replaceAll(/[.*+?^${}()|[\]\\]/g, '\\$&'),
-          'g',
-        );
-      }
-    }
-
     newRules[step].push({
       long: rule.long,
       short: rule.court.replaceAll(/\\g<(\d+)>/g, '$$$1'),
-      pattern,
+      pattern: step === 1 ? new RegExp(rule.long, 'g') : undefined,
     });
 
     return newRules;
@@ -845,7 +846,7 @@ const applyFirstNameAbbreviations = (
     if (!words[i - 1]?.startsWith('SAINT')) {
       for (const rule of rules[3] ?? []) {
         // biome-ignore lint/style/noNonNullAssertion: checked earlier
-        if (new RegExp(rule.long).test(word!)) {
+        if (new RegExp(`^(?:${rule.long})$`).test(word!)) {
           words[i] = rule.short.toLowerCase();
         }
       }
