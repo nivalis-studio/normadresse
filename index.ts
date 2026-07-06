@@ -375,148 +375,66 @@ const removeLowercaseArticles = (
   return output;
 };
 
-const applyInitialSteps = (
-  input: string,
-  maxLength: number,
-): { output: string; currentInput: string } => {
-  let output = input;
-  let currentInput = input;
-
-  // Step 1: Road type abbreviations
-  output = applyRoadTypeAbbreviations(currentInput, output, maxLength);
-
-  if (output.length <= maxLength) {
-    return { output, currentInput };
-  }
-
-  currentInput = output;
-
-  // Step 2: Title abbreviations
-  output = applyTitleAbbreviations(currentInput, output, maxLength);
-
-  if (output.length <= maxLength) {
-    return { output, currentInput };
-  }
-
-  currentInput = output;
-
-  // Step 3: General abbreviations
-  output = applyGeneralAbbreviations(currentInput, output, maxLength);
-
-  if (output.length <= maxLength) {
-    return { output, currentInput };
-  }
-
-  currentInput = output;
-
-  return { output, currentInput };
-};
-
-const applyMiddleSteps = (
-  input: string,
-  currentInput: string,
-  maxLength: number,
-): { output: string; currentInput: string } => {
-  let output = input;
-  let updatedInput = currentInput;
-
-  // Step 4: Road type abbreviations bis
-  output = applyRoadTypeAbbreviationsBis(updatedInput, output, maxLength);
-
-  if (output.length <= maxLength) {
-    return { output, currentInput: updatedInput };
-  }
-
-  updatedInput = output;
-
-  // Step 5: First name abbreviations
-  output = applyFirstNameAbbreviations(updatedInput, output, maxLength);
-
-  if (output.length <= maxLength) {
-    return { output, currentInput: updatedInput };
-  }
-
-  updatedInput = output;
-
-  // Step 6: Saint abbreviations
-  output = applySaintAbbreviations(updatedInput, output, maxLength);
-
-  if (output.length <= maxLength) {
-    return { output, currentInput: updatedInput };
-  }
-
-  return { output, currentInput: updatedInput };
-};
-
-const applyFinalSteps = (
-  output: string,
-  currentInput: string,
-  maxLength: number,
-): string => {
-  let result = output;
-
-  // Step 7: Road type at beginning
-  result = applyRoadTypeBeginning(currentInput, result, maxLength);
-
-  if (result.length <= maxLength) {
-    return result;
-  }
-
-  // Step 8: Particle replacement
-  result = applyParticleReplacement(result);
-
-  // Step 9: Remove uppercase articles
-  result = removeUppercaseArticles(result, maxLength);
-
-  if (result.length <= maxLength) {
-    return result;
-  }
-
-  // Step 10: Residual abbreviations
-  result = applyResidualAbbreviations(result, maxLength);
-
-  if (result.length <= maxLength) {
-    return result;
-  }
-
-  // Step 11: Remove lowercase articles
-  result = removeLowercaseArticles(result, maxLength);
-
-  return result;
-};
+/**
+ * The selectShortWords-based abbreviation steps, in the order applied by
+ * upstream etalab/normadresse (steps 1, 2, 4, 5, 3, 6, 5bis).
+ */
+const ABBREVIATION_STEPS = [
+  applyRoadTypeAbbreviations, // 1
+  applyTitleAbbreviations, // 2
+  applyGeneralAbbreviations, // 4
+  applyRoadTypeAbbreviationsBis, // 5
+  applyFirstNameAbbreviations, // 3
+  applySaintAbbreviations, // 6
+  applyRoadTypeBeginning, // 5bis
+] as const;
 
 const normalizer = (
   originalInput: string,
   maxLength = DEFAULT_MAX_LENGTH,
 ): string => {
   const input = preprocessInput(originalInput);
-  const output = input;
+  let output = input;
 
   if (output.length <= maxLength) {
     return output;
   }
 
-  const initialResult = applyInitialSteps(output, maxLength);
+  let currentInput = input;
 
-  if (initialResult.output.length <= maxLength) {
-    return initialResult.output;
+  for (const step of ABBREVIATION_STEPS) {
+    output = step(currentInput, output, maxLength);
+
+    if (output.length <= maxLength) {
+      return output;
+    }
+
+    // 5bis diffs against the same "long" input as step 6: the input is not
+    // advanced between applySaintAbbreviations and applyRoadTypeBeginning.
+    if (step !== applySaintAbbreviations) {
+      currentInput = output;
+    }
   }
 
-  const middleResult = applyMiddleSteps(
-    initialResult.output,
-    initialResult.currentInput,
-    maxLength,
-  );
+  // 9 - particle replacement (no length check)
+  output = applyParticleReplacement(output);
 
-  if (middleResult.output.length <= maxLength) {
-    return middleResult.output;
+  // 10 - remove uppercase articles
+  output = removeUppercaseArticles(output, maxLength);
+
+  if (output.length <= maxLength) {
+    return output;
   }
 
-  return applyFinalSteps(
-    middleResult.output,
-    middleResult.currentInput,
-    maxLength,
-  );
+  // 11 - residual abbreviations
+  output = applyResidualAbbreviations(output, maxLength);
+
+  if (output.length <= maxLength) {
+    return output;
+  }
+
+  // 12 - remove lowercase articles
+  return removeLowercaseArticles(output, maxLength);
 };
 
 export const normalize = (
