@@ -13,9 +13,6 @@
 		"type": "git",
 		"url": "git+https://github.com/nivalis-studio/normadresse.git"
 	},
-	"bugs": {
-		"url": "https://github.com/nivalis-studio/normadresse/issues"
-	},
 	"scripts": {
 		"lint": "biome check",
 		"lint:fix": "biome check --write",
