@@ -245,6 +245,22 @@ describe('normalize', () => {
     );
   });
 
+  it('should keep saint abbreviations when step 5bis shortens the road type', () => {
+    // Step 5bis must diff against the output of step 6 (saint
+    // abbreviations), as js-normadresse and normadresse.py do; otherwise
+    // SAINT/SAINTE come back in long form or words are dropped.
+    expect(normalize('TRAVERSE DE SAINTE EUPHEMIE DES BOIS')).toBe(
+      'TRAV DE STE EUPHEMIE DES BOIS',
+    );
+    expect(normalize('CHAPELLE DU HAMEAU DE SAINT BARTHELEMY')).toBe(
+      'CHAP DU HAME DE ST BARTHELEMY',
+    );
+    expect(normalize('Traverse saint dominique', 20)).toBe('TRAV ST DOMINIQUE');
+    expect(normalize('Chemin vicinal de saint henri', 24)).toBe(
+      'CHEM VICINAL DE ST HENRI',
+    );
+  });
+
   it('should handle edge cases with empty and whitespace', () => {
     expect(normalize('   ').trim()).toBe('');
     expect(normalize('')).toBe('');

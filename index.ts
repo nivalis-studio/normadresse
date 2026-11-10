@@ -482,11 +482,7 @@ const normalizer = (
       return output;
     }
 
-    // 5bis diffs against the same "long" input as step 6: the input is not
-    // advanced between applySaintAbbreviations and applyRoadTypeBeginning.
-    if (step !== applySaintAbbreviations) {
-      currentInput = output;
-    }
+    currentInput = output;
   }
 
   // 9 - particle replacement (no length check)
