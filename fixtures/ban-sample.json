@@ -1,0 +1,614 @@
+[
+	[
+		".  Contre allée de l'Avenue Marechal De Lattre De Tassigny",
+		"CONTRE ALL AV MAL L DE TASSIGNY"
+	],
+	["1, lieu dit Le Soulet", "1 LIEU DIT LE SOULET"],
+	["Abatucci - Marina d'Agosta IV", "ABATUCCI  MARINA D AGOSTA IV"],
+	["Allee des Bleuets Clos Émilienne Derret", "ALL B CLOS EMILIENNE DERRET"],
+	["Allée François René de Chateaubriand", "ALL F RENE DE CHATEAUBRIAND"],
+	["Allée Jean-François de la Perouse", "ALL JEAN FRANCOIS DE LA PEROUSE"],
+	["Allée Marie Duvache", "ALLEE MARIE DUVACHE"],
+	[
+		"Allée Pichelèbe - Lotissement Clos des Vignes",
+		"ALL PICHELEBE LOT CLOS VIGNES"
+	],
+	["Allée de la Chapelle Saint Conogan", "ALL DE LA CHAPELLE SAINT CONOGAN"],
+	["Allée de l’Industrie Z.I Richard BLOCH", "ALL DE L INDUSTRIE Z I R BLOCH"],
+	["Allée des Justes Parmi les Nations", "ALL DES JUSTES PARMI LES NATIONS"],
+	["Allée des goelands", "ALLEE DES GOELANDS"],
+	["Allée des tilleuls-gilberto bosques", "ALL DES TILLEULS G BOSQUES"],
+	["Allée du Hameau de la Grande Vigne", "ALL DU HAMEAU DE LA GRANDE VIGNE"],
+	[
+		"Allée roussin-condorcet--marcel provence",
+		"ALL ROUSSIN CONDORCET M PROVENCE"
+	],
+	[
+		"Ancienne Carraire des Troupeaux d’Arles prolongée",
+		"ANCIENNE C T ARLES PROLONGEE"
+	],
+	["Avenue Anne-Eugénie Milleret de Brou", "AV ANNE EUGENIE MILLERET DE BROU"],
+	["Avenue Irène et Frédéric Joliot Curie", "AV R ET FREDERIC JOLIOT CURIE"],
+	["Avenue Jacques et Christian de Chorivit", "AV J ET CHRISTIAN DE CHORIVIT"],
+	["Avenue Pointe Chevaux Gran Piquey", "AV POINTE CHEVAUX GRAN PIQUEY"],
+	["Avenue Saint - Cloud", "AVENUE SAINT  CLOUD"],
+	["Avenue claude debussy", "AVENUE CLAUDE DEBUSSY"],
+	["Avenue de l' abbe jean baptiste fouque", "AV DE L ABBE J BAPTISTE FOUQUE"],
+	["Avenue de l'Albinote ( à renommer)", "AV DE L ALBINOTE A RENOMMER"],
+	["Avenue de la Chapelle Forestière Pyla", "AV DE LA CHAP FORESTIERE PYLA"],
+	["Avenue de la Plage d'Agosta - RD55", "AV DE LA PLAGE D AGOSTA RD55"],
+	["Avenue de la Porte de la Chapelle", "AV DE LA PORTE DE LA CHAPELLE"],
+	["Avenue de la Reousse Dune l'Herbe", "AV DE LA REOUSSE DUNE L HERBE"],
+	[
+		"Avenue des Combattants en Afrique du Nord 1952-1962",
+		"AV C AFRIQUE NORD 1952 1962"
+	],
+	["Avenue des Martyrs de la Libération", "AV DES MARTYRS DE LA LIBERATION"],
+	["Avenue du Cimetière des Batignolles", "AV DU CIMETIERE DES BATIGNOLLES"],
+	[
+		"Avenue du Général Goislard de Monsabert",
+		"AV DU GAL GOISLARD DE MONSABERT"
+	],
+	[
+		"Avenue du Maréchal de Lattre de Tassigny",
+		"AV DU MAL DE LATTRE DE TASSIGNY"
+	],
+	[
+		"Avenue du Président John Fitzgerald Kennedy",
+		"AV DU PDT J FITZGERALD KENNEDY"
+	],
+	["Avenue escadrille normandie niemen", "AV ESCADRILLE NORMANDIE NIEMEN"],
+	["Boulevard Antoine de Saint-Exupéry", "BD ANTOINE DE SAINT EXUPERY"],
+	["Boulevard Godard", "BOULEVARD GODARD"],
+	["Boulevard Halimbourg (proposition)", "BD HALIMBOURG PROPOSITION"],
+	["Boulevard Honoré d'Estienne d'Orves", "BD HONORE D ESTIENNE D ORVES"],
+	["Boulevard Irène et Frédéric Joliot-Curie", "BD R ET FREDERIC JOLIOT CURIE"],
+	["Boulevard Watteau Res la Rhônelle", "BD WATTEAU RES LA RHONELLE"],
+	["Boulevard de la Liberté Res Bercy", "BD DE LA LIBERTE RES BERCY"],
+	["Boulevard des Girondins Crx d'Hins", "BD DES GIRONDINS CRX D HINS"],
+	[
+		"Boulevard du Docteur Louis Lalanne Pyla",
+		"BD DU DOCTEUR LOUIS LALANNE PYLA"
+	],
+	["Boulevard du commandant finat duclos", "BD DU COMMANDANT FINAT DUCLOS"],
+	["Boulevard notre dame de santa cruz", "BD NOTRE DAME DE SANTA CRUZ"],
+	["Campu Tondu - RD102", "CAMPU TONDU  RD102"],
+	["Carrughju Cannonicu Laurent Ciabrini", "CARRUGHJU CANNONICU L CIABRINI"],
+	["Carrughju Paulin Colonna D'Istria", "CARRUGHJU P COLONNA D ISTRIA"],
+	["Chemin / Hent Kerbaskiou", "CHEMIN  HENT KERBASKIOU"],
+	["Chemin / Hent Kerlosket Izelañ", "CHEMIN  HENT KERLOSKET IZELAN"],
+	["Chemin / Hent Kervernar", "CHEMIN  HENT KERVERNAR"],
+	["Chemin / Hent Roudouig", "CHEMIN  HENT ROUDOUIG"],
+	["Chemin / Hent Ti Nevez Meilh Gornigell", "CHEM H TI NEVEZ MEILH GORNIGELL"],
+	["Chemin Communal d’Acces au College", "CHEMIN COM D ACCES AU COLLEGE"],
+	["Chemin Darid Maillot", "CHEMIN DARID MAILLOT"],
+	["Chemin De Roquemartine et du Mas Lamy", "CHEMIN DE M ET DU MAS LAMY"],
+	[
+		"Chemin Departemental 53 Tour de l'Etang l'Olivi",
+		"CHEM DEP 53 TOUR L ETAN L OLIVI"
+	],
+	[
+		"Chemin Departemental de Montpon à Captieux",
+		"CHEMIN DEP DE MONTPON A CAPTIEUX"
+	],
+	["Chemin Départemental 13 la Fontaine", "CHEMIN DEP 13 LA FONTAINE"],
+	[
+		"Chemin Départemental N° 15 (Route du Puy st Réparade)",
+		"CHEM DEP N 15 RTE P ST REPARADE"
+	],
+	["Chemin Notre - Dame de la Pitie", "CHEMIN NOTRE  DAME DE LA PITIE"],
+	["Chemin Rural 10 dit du Petit Chemin", "CHEMIN RURAL 10 DIT DU PT CHEMIN"],
+	["Chemin Vicénal 302 Verduyster Straete", "CHEM V 302 VERDUYSTER STRAETE"],
+	["Chemin de Ceinture du Lac Supérieur", "CHEM CEINTURE DU LAC SUPERIEUR"],
+	["Chemin de Goeulzin", "CHEMIN DE GOEULZIN"],
+	[
+		"Chemin de Romeries - Hameau de Vertigneul",
+		"CHEM DE ROMERIES HAME VERTIGNEUL"
+	],
+	["Chemin de Troisvilles à Audencourt", "CHEM DE TROISVILLES A AUDENCOURT"],
+	["Chemin de Vieux Berquin", "CHEMIN DE VIEUX BERQUIN"],
+	["Chemin de l'Écluse de Toul ar Rodo", "CHEMIN DE L ECLU DE TOUL AR RODO"],
+	["Chemin de la Calanque à Gd Brahys", "CHEM DE LA CALANQUE A GD BRAHYS"],
+	["Chemin de la Chapelle Saint-Laurent", "CHEMIN DE LA CHAP SAINT LAURENT"],
+	["Chemin de la Côte des Sœurs", "CHEMIN DE LA COTE DES SOEURS"],
+	["Chemin de la Grande Pugère Metrique", "CHEMIN DE LA GDE PUGERE METRIQUE"],
+	["Chemin de la Mairie (Tan Rouge)", "CHEMIN DE LA MAIRIE TAN ROUGE "],
+	[
+		"Chemin de la Pointe de Jouveau à l'Ormeau",
+		"CHEM POIN DE JOUVEAU A L ORMEAU"
+	],
+	[
+		"Chemin de saint antoine a saint joseph",
+		"CHEMIN DE ST ANTOINE A ST JOSEPH"
+	],
+	["Chemin des Brumes du Luberon D23b", "CHEM DES BRUMES DU LUBERON D23B"],
+	["Chemin des Couloubriers", "CHEMIN DES COULOUBRIERS"],
+	["Chemin des Gilbertes et des Vignes", "CHEMIN DES G ET DES VIGNES"],
+	["Chemin des Jardins de Saint-Julien", "CHEMIN DES JARD DE SAINT JULIEN"],
+	["Chemin des Vignes du 1er Mai - VC155", "CHEM DES VIGNES DU 1ER MAI VC155"],
+	[
+		"Chemin du Cornet des Coutelles à la Blanche Bannière",
+		"CHEM C C BLANCHE BANNIERE"
+	],
+	["Chemin du Mas de Gaillard", "CHEMIN DU MAS DE GAILLARD"],
+	["Chemin du Mas de la Lune à Craponne", "CHEM MAS DE LA LUNE A CRAPONNE"],
+	["Chemin du Ruisseau de Sainte Christine", "CHEM RUISSEAU DE STE CHRISTINE"],
+	["Chemin rural de la Carrière d'Avesnes", "CHEM RURAL DE LA CARR D AVESNES"],
+	[
+		"Chemin à nommer (secteur grand Moussas Ouest)",
+		"CHEM N SECTEUR GD MOUSSAS OUEST"
+	],
+	["Cheminement de Sainte Mulders Vc 15", "CHEMINEMENT DE STE MULDERS VC 15"],
+	["Cité Joli Cœur", "CITE JOLI COEUR"],
+	["Clos de la Cense", "CLOS DE LA CENSE"],
+	["Cour Cauwez Avenue Anatole France", "COUR CAUWEZ AV ANATOLE FRANCE"],
+	["Cour Lamotte 69 Avenue Anatole France", "COUR LAMOTTE 69 AV A FRANCE"],
+	["Cour Vandamme 32bis rue de l'Epine", "COUR VANDAMME 32BIS RUE L EPINE"],
+	["Cozilis - Locmaria-Berrien", "COZILIS  LOCMARIA BERRIEN"],
+	["Enclos Jean-Baptiste Cadet de Beaupre", "ENCLOS J B CADET DE BEAUPRE"],
+	["Esplanade Denise et Marius Roubaud", "ESPLANADE D ET MARIUS ROUBAUD"],
+	["Garri du Gay", "GARRI DU GAY"],
+	["Impasse  Impasse Jean-Pierre Tennevin", "IMP IMPASSE JEAN PIERRE TENNEVIN"],
+	["Impasse Av de la Pointe de Grave 5", "IMP AV DE LA POINTE DE GRAVE 5"],
+	[
+		"Impasse Chemin de Meyreuil à Fuveau II (à nommer)",
+		"IMP CHEM M FUVEAU II NOMMER"
+	],
+	["Impasse Chemin du Marloi I (à nommer)", "IMP CHEMIN DU MARLOI I A NOMMER"],
+	["Impasse Colina", "IMPASSE COLINA"],
+	["Impasse Diamant (voie privée)", "IMPASSE DIAMANT VOIE PRIVEE "],
+	["Impasse Favart 13bis rue de Bailleul", "IMP FAVART 13BIS RUE DE BAILLEUL"],
+	["Impasse Irène et Frédéric Joliot-Curie", "IMP R ET FREDERIC JOLIOT CURIE"],
+	["Impasse Lecomte Rue Louise Michel", "IMP LECOMTE RUE LOUISE MICHEL"],
+	["Impasse Marceline et Joseph Martinet", "IMP MARCELINE ET JOSEPH MARTINET"],
+	["Impasse Pierrette Mistral-Granger", "IMP PIERRETTE MISTRAL GRANGER"],
+	["Impasse Sclavo Impasse Sclavo Paul", "IMP SCLAVO IMPASSE SCLAVO PAUL"],
+	["Impasse Tennis Pompiers", "IMPASSE TENNIS POMPIERS"],
+	[
+		"Impasse chemin de Meyreuil à Fuveau III (à nommer)",
+		"IMP CHEM M FUVEAU III NOMMER"
+	],
+	["Impasse d'Halluin 47bis rue du Halot", "IMP D HALLUIN 47BIS RUE DU HALOT"],
+	["Impasse de la Bastide des Garrias", "IMP DE LA BASTIDE DES GARRIAS"],
+	["Impasse de la Fontaine de Fabrèges", "IMP DE LA FONTAINE DE FABREGES"],
+	["Impasse de la Révolution Française", "IMP DE LA REVOLUTION FRANCAISE"],
+	["Impasse de la vallee", "IMPASSE DE LA VALLEE"],
+	["Impasse des Camelias (pont d’Yves)", "IMP DES CAMELIAS PONT D YVES"],
+	["Impasse des Cantarelles I (A NOMMER)", "IMP DES CANTARELLES I A NOMMER"],
+	["Impasse des Encabrons I (à nommer)", "IMP DES ENCABRONS I A NOMMER"],
+	["Impasse des Frères Dupuy à Cazaux", "IMP DES FRERES DUPUY A CAZAUX"],
+	["Impasse des Pradels III (A NOMMER)", "IMP DES PRADELS III A NOMMER"],
+	[
+		"Impasse des Prés de Figuey - Lotissement les Prés de Figuey",
+		"IMP PRES FIGUEY LOT PRES FIGUEY"
+	],
+	["Impasse des Rajols III (A NOMMER)", "IMPASSE DES RAJOLS III A NOMMER "],
+	["Impasse des Treilles de Saint Jean", "IMP DES TREILLES DE SAINT JEAN"],
+	["Impasse du Brigadier-Chef Ronan Pointeau", "IMP B CHEF RONAN POINTEAU"],
+	[
+		"Impasse du Couloumey - Lotissement Le Couloumey",
+		"IMP COULOUMEY LOT LE COULOUMEY"
+	],
+	["Impasse du Jas de Bassas I (A NOMMER)", "IMP DU JAS DE BASSAS I A NOMMER"],
+	["Impasse du Paille En Queue", "IMPASSE DU PAILLE EN QUEUE"],
+	["Impasse du Sacré Cœur", "IMPASSE DU SACRE COEUR"],
+	["Impasse du clos de Léon I (A NOMMER)", "IMP DU CLOS DE LEON I A NOMMER"],
+	["Impasse jas de Bassas I (à nommer)", "IMP JAS DE BASSAS I A NOMMER"],
+	[
+		"Impasse lotissement l'Auriol et Mouroumiou",
+		"IMP LOT L AURIOL ET MOUROUMIOU"
+	],
+	["Impasse rue st Michel I (à nommer)", "IMP RUE ST MICHEL I A NOMMER"],
+	["Kergouarc'h - Locmaria-Berrien", "KERGOUARC H  LOCMARIA BERRIEN"],
+	["Kerlec Vihan", "KERLEC VIHAN"],
+	["Kerstephan - Route de la mer", "KERSTEPHAN  ROUTE DE LA MER"],
+	[
+		"La Retrounade - Chemin de la Retournade",
+		"LA RETROUNADE CHEM LA RETOURNADE"
+	],
+	["Le C Hreck", "LE C HRECK"],
+	["Le Harz .", "LE HARZ "],
+	["Les Hauts des Terrasses de Porticcio", "LES HTS DES TERR DE PORTICCIO"],
+	["Lieu Dit Penareun", "LIEU DIT PENAREUN"],
+	["Lieu-Dit Les Carrières de Kermanac'h", "LD LES CARRIERES DE KERMANAC H"],
+	["Lieu-dit Moulin Coadic (Kerudoret)", "LD MOULIN COADIC KERUDORET"],
+	["Lotissement Campagne du Vieux Mas", "LOT CAMPAGNE DU VIEUX MAS"],
+	["Lotissement Clos des Cerisiers III", "LOT CLOS DES CERISIERS III"],
+	["Lotissement Communal les Gravettes", "LOT COMMUNAL LES GRAVETTES"],
+	["Lotissement Grondin (rue des Fuschias)", "LOT GRONDIN RUE DES FUSCHIAS"],
+	["Lotissement Le Clos de la Martyre", "LOT LE CLOS DE LA MARTYRE"],
+	["Lotissement Le Moulin de Caplande", "LOT LE MOULIN DE CAPLANDE"],
+	["Lotissement Les Hameaux du Soleil", "LOT LES HAMEAUX DU SOLEIL"],
+	["Lotissement Les Hauts de la Garenne", "LOT LES HAUTS DE LA GARENNE"],
+	["Lotissement Les Jardins du Blayet", "LOT LES JARDINS DU BLAYET"],
+	["Lotissement Lotissement Gagliardo", "LOT LOTISSEMENT GAGLIARDO"],
+	["Lotissement Parc d'Act des Cantines", "LOT PARC D ACT DES CANTINES"],
+	[
+		"Lotissement Residence le Clos du Garzon",
+		"LOT RESIDENCE LE CLOS DU GARZON"
+	],
+	["Lotissement Spezia Chemin du Merle", "LOT SPEZIA CHEMIN DU MERLE"],
+	["Lotissement d'Aurumy II (à nommer)", "LOT D AURUMY II A NOMMER"],
+	[
+		"Lotissement de la Fragnée - Route de Cézac",
+		"LOT DE LA FRAGNEE ROUTE DE CEZAC"
+	],
+	[
+		"Lotissement des Graves - Impasse du Chemin Blanc",
+		"LOT DES GRAVES IMP DU CHEM BLANC"
+	],
+	["Lotissement du Domaine de l’Etang", "LOT DU DOMAINE DE L ETANG"],
+	["Lotissement la Cheneraie de Primoula", "LOT LA CHENERAIE DE PRIMOULA"],
+	["Lotissement la Garenne de Moulereau", "LOT LA GARENNE DE MOULEREAU"],
+	["Lotissement le Bois de Saint Yves", "LOT LE BOIS DE SAINT YVES"],
+	["Lotissement le Clos de Sainte-Marthe", "LOT LE CLOS DE SAINTE MARTHE"],
+	["Lotissement le Clos de la Haute Lande", "LOT LE CLOS DE LA HAUTE LANDE"],
+	["Lotissement le Clos des Santolines", "LOT LE CLOS DES SANTOLINES"],
+	["Lotissement le Domaine de Bacchus", "LOT LE DOMAINE DE BACCHUS"],
+	["Lotissement le Domaine des Monts d’Or", "LOT LE DOMAINE DES MONTS D OR"],
+	["Lotissement le Hameau de Bourdieu", "LOT LE HAMEAU DE BOURDIEU"],
+	["Lotissement le Hameau de Piantarella", "LOT LE HAMEAU DE PIANTARELLA"],
+	["Lotissement le Hameau de la Placette", "LOT LE HAMEAU DE LA PLACETTE"],
+	["Lotissement le Hameau du Bourdieu", "LOT LE HAMEAU DU BOURDIEU"],
+	["Lotissement le Moulin de Saint-Paul", "LOT LE MOULIN DE SAINT PAUL"],
+	["Lotissement le Puits des Nourades", "LOT LE PUITS DES NOURADES"],
+	["Lotissement les Allées de Georges", "LOT LES ALLEES DE GEORGES"],
+	["Lotissement les Bois d'Elzide", "LOTISSEMENT LES BOIS D ELZIDE"],
+	["Lotissement les Cabanniers de Bottaï", "LOT LES CABANNIERS DE BOTTAI"],
+	["Lotissement les Coteaux de l’Abbaye", "LOT LES COTEAUX DE L ABBAYE"],
+	["Lotissement les Ham de Port de Bouc", "LOT LES HAM DE PORT DE BOUC"],
+	["Lotissement les Hauts de Roquetaillant", "LOT LES HAUTS DE ROQUETAILLANT"],
+	["Lotissement les Hauts des Nouradons", "LOT LES HAUTS DES NOURADONS"],
+	["Lotissement les Jardins de Beg An Tour", "LOT LES JARDINS DE BEG AN TOUR"],
+	["Lotissement les Jardins de Condat", "LOT LES JARDINS DE CONDAT"],
+	["Lotissement les Jardins de Meyrol", "LOT LES JARDINS DE MEYROL"],
+	["Lotissement les Jardins de Stantari", "LOT LES JARDINS DE STANTARI"],
+	["Lotissement les Jardins de l’Evêque", "LOT LES JARDINS DE L EVEQUE"],
+	["Lotissement les Jardins du Grand Puits", "LOT LES JARDINS DU GRAND PUITS"],
+	[
+		"Lotissement les Lauriers Lot les Lauriers",
+		"LOT LAURIERS LOT LES LAURIERS"
+	],
+	["Lotissement les Oliviers (7 à 10)", "LOTISSEMENT LES OLIVIERS 7 A 10 "],
+	["Lotissement les Pommiers Entressen", "LOT LES POMMIERS ENTRESSEN"],
+	[
+		"Lotissement les Restanques et Collongue",
+		"LOT LES RESTANQUES ET COLLONGUE"
+	],
+	["Lotissement les Toits de la Pounche", "LOT LES TOITS DE LA POUNCHE"],
+	[
+		"Lotissement les Vignes des Grandes Bruyères",
+		"LOT LES VIGNES DES GDES BRUYERES"
+	],
+	[
+		"Monastere Saint Francois d’Assise Lanorgard",
+		"MONASTERE ST F ASSISE LANORGARD"
+	],
+	["Parc de stationnement André Michelin", "PARC DE STATIONNEMENT A MICHELIN"],
+	["Parc d’Activites des Pierres Blanches", "PARC D ACTIVITES DES P BLANCHES"],
+	["Passage Flourens", "PASSAGE FLOURENS"],
+	["Passage Geneviève Anthonioz de Gaulle", "PAS G ANTHONIOZ DE GAULLE"],
+	["Passage du Ruisseau de Ménilmontant", "PAS DU RUISSEAU DE MENILMONTANT"],
+	["Penn ar Gêr - Porzh-Kloz huella", "PENN AR GER  PORZH KLOZ HUELLA"],
+	["Piazza di u Preti Barthelemy Arrighi", "PIAZZA D U P BARTHELEMY ARRIGHI"],
+	[
+		"Place Docteurs Charles et Christophe Mérieux",
+		"PL DOCTEURS C ET C MERIEUX"
+	],
+	["Place Marie-Louise Dugès-Lachapelle", "PL MARIE LOUISE DUGES LACHAPELLE"],
+	["Place Robert Antelme", "PLACE ROBERT ANTELME"],
+	[
+		"Place de l'Hôtel de Ville-esplanade de la Libération",
+		"PL HOT VILLE ESPL LA LIBERATION"
+	],
+	["Place des Anciennes Fonderies Rivière", "PL ANCIENNES FONDERIES RIVIERE"],
+	[
+		"Place des Frères Pierre et Paul-Louis Fillion",
+		"PL DES FRERES P ET P L FILLION"
+	],
+	["Place des courbettes (lot la simiane", "PL DES COURBETTES LOT LA SIMIANE"],
+	["Place du Diament Ou Place de Gaulle", "PL DU DIAMENT OU PLACE DE GAULLE"],
+	[
+		"Place du Maréchal de Lattre de Tassigny",
+		"PL DU MAL DE LATTRE DE TASSIGNY"
+	],
+	[
+		"Place en hommage aux femmes victimes de violences",
+		"PL H FEMMES VICTIMES VIOLENCES"
+	],
+	["Pont de Grenelle-Cadets de Saumur", "PONT DE R CADETS DE SAUMUR"],
+	["Poullaba - Locmaria-Berrien", "POULLABA  LOCMARIA BERRIEN"],
+	["Quai des 4 Écluses", "QUAI DES 4 ECLUSES"],
+	["Quai des Martyrs du 8 Février 1962", "QUAI MARTYRS DU 8 FEVRIER 1962"],
+	["Residence Arts Bat Picasso Bd Resist", "RES ARTS BAT PICASSO BD RESIST"],
+	["Residence Bourgogne Ave Leo Lagrange", "RES BOURGOGNE AVE LEO LAGRANGE"],
+	["Residence Hoteliere Piece Rouline", "RES HOTELIERE PIECE ROULINE"],
+	["Residence Robert de Man Rue de la Pl", "RES ROBERT DE MAN RUE DE LA PL"],
+	["Residence de la Cense Rue des Ecoles", "RES DE LA CENSE RUE DES ECOLES"],
+	["Residence la Closeraie Rue du Vivier", "RES LA CLOSERAIE RUE DU VIVIER"],
+	[
+		"Residence le Clos de Sangues - 3ter route de Jean de Jeanne",
+		"RES C SANGUES 3TER RTE J JEANNE"
+	],
+	["Residence le Village de Templeuve", "RES LE VILLAGE DE TEMPLEUVE"],
+	["Residence les Glaieuls, rue du Collège", "RES LES GLAIEULS RUE DU COLLEGE"],
+	["Residence les Pervenches Rue Carlier", "RES LES PERVENCHES RUE CARLIER"],
+	["Residence les Terrasses du Parc D", "RES LES TERRASSES DU PARC D"],
+	[
+		"Rond point du Régiment du Duc de Wellington",
+		"RPT DU RGT DU DUC DE WELLINGTON"
+	],
+	["Rond-Point fernand portal pelissier", "RPT FERNAND PORTAL PELISSIER"],
+	["Rond-Point vallon vert marcel delprat", "RPT VALLON VERT MARCEL DELPRAT"],
+	["Route Hubert Delisle N°2 Guillaume", "RTE HUBERT DELISLE N 2 GUILLAUME"],
+	["Route de Caetre VC les 3 tilleuls", "RTE DE CAETRE VC LES 3 TILLEULS"],
+	["Route de Chantejals - Clavières", "ROUTE DE CHANTEJALS  CLAVIERES"],
+	["Route de Chardonnet", "ROUTE DE CHARDONNET"],
+	["Route de Lozanne ZA des Grandes Terres", "RTE DE A ZA DES GDES TERRES"],
+	["Route de Plobannalec - Pendrev", "ROUTE DE PLOBANNALEC  PENDREV"],
+	["Route de Port Saint Louis du Rhône", "RTE DE PORT SAINT LOUIS DU RHONE"],
+	["Route de Saint Renan", "ROUTE DE SAINT RENAN"],
+	["Route de Saint-Christophe-de-Double", "RTE DE ST CHRISTOPHE DE DOUBLE"],
+	["Route de la Chapelle Saint Pancrace", "RTE DE LA CHAP SAINT PANCRACE"],
+	["Route de la Fontaine Saint Rivoual", "RTE DE LA FONTAINE SAINT RIVOUAL"],
+	[
+		"Route de la Viale à Planchamp Supérieur",
+		"RTE VIALE A PLANCHAMP SUPERIEUR"
+	],
+	[
+		"Route du Château de Saint Julien d'Arpaon",
+		"RTE CHAT DE ST JULIEN D ARPAON"
+	],
+	["Route du Guilvinec - Pendrev", "ROUTE DU GUILVINEC  PENDREV"],
+	["Route du Lachal", "ROUTE DU LACHAL"],
+	["Route du Moulin - Locmaria-Berrien", "RTE DU MOULIN LOCMARIA BERRIEN"],
+	["Route nationale 41 Lille-La Bassée", "RTE NATIONALE 41 LILLE LA BASSEE"],
+	["Rue Bernoulli", "RUE BERNOULLI"],
+	["Rue Bienheureux Vincent l’Henoret", "RUE BIENHEUREUX V L HENORET"],
+	["Rue Charles Guillochet de la Perrière", "RUE C GUILLOCHET DE LA PERRIERE"],
+	["Rue Docteur Charles Nancel Pénard", "RUE DR CHARLES NANCEL PENARD"],
+	["Rue Favre-garin", "RUE FAVRE GARIN"],
+	["Rue Fond Café (Ex Ibrahim Balbolia)", "RUE F CAFE EX IBRAHIM BALBOLIA"],
+	["Rue Gay - Lussac", "RUE GAY  LUSSAC"],
+	["Rue Geneviève Anthonioz de Gaulle", "RUE G ANTHONIOZ DE GAULLE"],
+	["Rue Guy Rousseaud Maire 1989-2008", "RUE G ROUSSEAUD MAIRE 1989 2008"],
+	["Rue Irène Et Frédéric Joliot-Curie", "RUE R ET FREDERIC JOLIOT CURIE"],
+	["Rue Irène et Frédéric Joliot Curie", "RUE R ET FREDERIC JOLIOT CURIE"],
+	["Rue Jean Champierre de Villeneuve", "RUE J CHAMPIERRE DE VILLENEUVE"],
+	["Rue Jean-Baptiste Chopin", "RUE JEAN BAPTISTE CHOPIN"],
+	[
+		"Rue Lamothe-Barbot - Lotissement Domaine des Acacias",
+		"RUE L BARBOT LOT DOMA ACACIAS"
+	],
+	[
+		"Rue Louise-Émilie de La Tour d'Auvergne",
+		"RUE L EMILIE LA TOUR D AUVERGNE"
+	],
+	[
+		"Rue Marie-Louise et Anne-Marie Soucelier",
+		"RUE M L ET ANNE MARIE SOUCELIER"
+	],
+	[
+		"Rue Michèle Perrein Lotissement le Monsabert",
+		"RUE M PERREIN LOT LE MONSABERT"
+	],
+	["Rue Montreuil", "RUE MONTREUIL"],
+	["Rue Notre Dame - Hameau de Vertigneul", "RUE ND HAMEAU DE VERTIGNEUL"],
+	["Rue Sadi Coupez Résidence Gostiaux", "RUE SADI COUPEZ RES GOSTIAUX"],
+	["Rue Saint - Fiacre", "RUE SAINT  FIACRE"],
+	["Rue Songoro", "RUE SONGORO"],
+	["Rue d'Ovillers - Le Petit Vendegies", "RUE D OVILLERS LE PT VENDEGIES"],
+	["Rue de Kerdalaë (Ty jardin)", "RUE DE KERDALAE TY JARDIN "],
+	["Rue de Kerloquic", "RUE DE KERLOQUIC"],
+	["Rue de l'Abbaye de Saint-Wandrille", "RUE DE L ABBA DE SAINT WANDRILLE"],
+	[
+		"Rue de l'Archevêque Amanieu de Grézillac",
+		"RUE L ARCHEVEQUE A DE GREZILLAC"
+	],
+	["Rue de la Charente", "RUE DE LA CHARENTE"],
+	["Rue de la Dives - Allée C", "RUE DE LA DIVES  ALLEE C"],
+	["Rue de la Fondation Dorothée Petit", "RUE LA FONDATION DOROTHEE PETIT"],
+	["Rue de la Residence du Gros Arbres", "RUE DE LA RES DU GROS ARBRES"],
+	[
+		"Rue des Anciennes Mines - Cité de la Mines",
+		"RUE ANCIENNES MINES CITE MINES"
+	],
+	["Rue des Anciens Combattants d’Afn", "RUE ANCIENS COMBATTANTS D AFN"],
+	["Rue des Annelles - Résidence du Pont Cassé", "RUE DES A RES DU PONT CASSE"],
+	["Rue des Combattants d'Afrique du Nord", "RUE COMBATTANTS AFRIQUE DU NORD"],
+	[
+		"Rue des Docteurs Augusta et Jules Dejerine",
+		"RUE DOCTEURS AUGUSTA J DEJERINE"
+	],
+	["Rue des Duriez", "RUE DES DURIEZ"],
+	[
+		"Rue des Genêts - Lotissement Domaine de Calens",
+		"RUE GENETS LOT DOMA DE CALENS"
+	],
+	[
+		"Rue des Lavandières - Locmaria-Berrien",
+		"RUE LAVANDIERES LOCMARIA BERRIEN"
+	],
+	[
+		"Rue des Prêtres Saint-Germain l'Auxerrois",
+		"RUE PRETRES ST GERMAIN AUXERROIS"
+	],
+	["Rue des Tilleuls - Locmaria-Berrien", "RUE TILLEULS LOCMARIA BERRIEN"],
+	["Rue du 1er R.a.c.", "RUE DU 1ER R A C "],
+	["Rue du 8ème Régiment d'Infanterie", "RUE DU 8EME RGT D INFANTERIE"],
+	["Rue du Combayre", "RUE DU COMBAYRE"],
+	[
+		"Rue du Complexe Sportif Esplanade Simone Veil",
+		"RUE C SPORTIF ESPL SIMONE VEIL"
+	],
+	["Rue du Docteur Lucas-Championnière", "RUE DU DR LUCAS CHAMPIONNIERE"],
+	[
+		"Rue du Général de Gaulle (St Gilles les Bains)",
+		"RUE GAL DE GAULLE ST G LES BAINS"
+	],
+	["Rue du Lieutenant-Colonel Le Toullec", "RUE DU LT COLONEL LE TOULLEC"],
+	["Rue du Maréchal Franchet d'Esperey", "RUE DU MAL FRANCHET D ESPEREY"],
+	["Rue du President Salvador Allende", "RUE DU PDT SALVADOR ALLENDE"],
+	[
+		"Rue du Président John Fitzgerald Kennedy",
+		"RUE DU PDT J FITZGERALD KENNEDY"
+	],
+	["Rue du Tumulus", "RUE DU TUMULUS"],
+	["Rue du colonel jean baptiste petre", "RUE DU CNL JEAN BAPTISTE PETRE"],
+	["Rue Étienne Regnault (St Paul Centre)", "RUE E REGNAULT ST PAUL CENTRE"],
+	["Ruelle du Sud-Ouest Ou Carriero Dou Labe", "RUEL S O OU CARRIERO DOU LABE"],
+	["Rumein - Locmaria-Berrien", "RUMEIN  LOCMARIA BERRIEN"],
+	["Résidence Auvergne All des Aubépines", "RES AUVERGNE ALL DES AUBEPINES"],
+	["Résidence Bonneval - Rue d'Uzerche", "RES BONNEVAL RUE D UZERCHE"],
+	["Résidence Citizen Park Rue L.bathiat", "RES CITIZEN PARK RUE L BATHIAT"],
+	["Résidence Diane Rue du Maréchal Juin", "RES DIANE RUE DU MARECHAL JUIN"],
+	["Résidence Henri Matisse Pl du Marché", "RES HENRI MATISSE PL DU MARCHE"],
+	["Résidence Jupiter Rue Jean de Haynin", "RES JUPITER RUE JEAN DE HAYNIN"],
+	["Résidence Le Vallon de Kervalennou", "RES LE VALLON DE KERVALENNOU"],
+	[
+		"Résidence Lou Paloumayre - 17 rue de la Croix Blanche",
+		"RES L P 17 RUE CRX BLANCHE"
+	],
+	["Résidence Pablo Picasso Rue Maubeuge", "RES PABLO PICASSO RUE MAUBEUGE"],
+	["Résidence Res Pre du Saussoir Rte de", "RES RES PRE DU SAUSSOIR RTE DE"],
+	["Résidence Tibère Rue du vieux chemin", "RES TIBERE RUE DU VIEUX CHEMIN"],
+	["Résidence Virgile Rue du Vieux Chem", "RES VIRGILE RUE DU VIEUX CHEM"],
+	["Résidence du Château Saint Aignan", "RES DU CHATEAU SAINT AIGNAN"],
+	["Résidence du Verger Chem de Préseau", "RES DU VERGER CHEM DE PRESEAU"],
+	["Résidence la Sapiniere Rue H Berlioz", "RES LA SAPINIERE RUE H BERLIOZ"],
+	["Résidence le Meridien Rue Mal Lecler", "RES LE MERIDIEN RUE MAL LECLER"],
+	["Résidence les Chardonnerets Rue Berl", "RES LES CHARDONNERETS RUE BERL"],
+	["Résidence les Ecureuils, rue de la Marne", "RES ECUREUILS RUE DE LA MARNE"],
+	["Résidence les Hauts des Carrières", "RES LES HAUTS DES CARRIERES"],
+	[
+		"Résidence les Jardins du Clouet - 1 avenue du Périgord",
+		"RES JARD CLOUET 1 AV DU PERIGORD"
+	],
+	["Résidence les Primeveres Rue Berlioz", "RES LES PRIMEVERES RUE BERLIOZ"],
+	["Résidence les Prov Fses Bat Limousin", "RES LES PROV FSES BAT LIMOUSIN"],
+	["Résidence les Sapins Imp Cheverny", "RES LES SAPINS IMP CHEVERNY"],
+	["Résidence les jardins de Cassandra 2", "RES LES JARDINS DE CASSANDRA 2"],
+	["Saint-Quentin Est", "SAINT QUENTIN EST"],
+	["Square Irène et Frédéric Joliot-Curie", "SQ R ET FREDERIC JOLIOT CURIE"],
+	["Square Sainte-croix de la Bretonnerie", "SQ STE CROIX DE LA BRETONNERIE"],
+	["Strada di a Cappedda Santa Ursula", "STRADA DI CAPPEDDA SANTA URSULA"],
+	["Straedig Porzh an Traon - Quinoualc'h", "STRAEDIG P AN TRAON QUINOUALC H"],
+	["Stretta di Micheli Agnuli Supranu", "STRETTA DI M AGNULI SUPRANU"],
+	["Stretta di Micheli Agnuli Suttanu", "STRETTA DI M AGNULI SUTTANU"],
+	["Strittonu di a Funtana di u Tianu", "STRITTONU DI FUNTANA DI U TIANU"],
+	["Sulliec", "SULLIEC"],
+	["Tourne-Ici - Route de la mer", "TOURNE ICI  ROUTE DE LA MER"],
+	["Traverse des Résidences du Breuil", "TRAVERSE DES RES DU BREUIL"],
+	["Tredudon Le Moine - Hent ar Gloued-Vras", "TREDUDON M HENT AR GLOUED VRAS"],
+	["Voie Communale Ancienne Grand Rue", "VOIE COMMUNALE ANCIENNE GD RUE"],
+	[
+		"Voie Communale Chabaud Latour R Marsilly",
+		"VOIE C CHABAUD LATOUR R MARSILLY"
+	],
+	["Voie Communale Chasse Revel", "VOIE COMMUNALE CHASSE REVEL"],
+	["Voie Communale Corniche Lac et Forêt", "VOIE COMMUNALE CORN LAC ET FORET"],
+	[
+		"Voie Communale Dreve Notre-Dame d’Amour",
+		"VOIE COMMUNALE DREVE ND D AMOUR"
+	],
+	["Voie Communale Joseph Plausteiner", "VOIE COMMUNALE J PLAUSTEINER"],
+	["Voie Communale Lynck Straete Cr 6", "VOIE C LYNCK STRAETE CR 6"],
+	["Voie Communale N.6 Dite Paperstraete", "VOIE C N 6 DITE PAPERSTRAETE"],
+	[
+		"Voie Communale Oree du Bois Rue Merisiers",
+		"VOIE C OREE BOIS RUE MERISIERS"
+	],
+	["Voie Communale Raquette Piquepoul Cap Fer", "VOIE C R PIQUEPOUL CAP FER"],
+	["Voie Communale Res Nelson Mandela", "VOIE COMMUNALE RES N MANDELA"],
+	["Voie Communale Res au Delà de l'Eau", "VOIE C RES AU DELA DE L EAU"],
+	["Voie Communale Res l’Lefebvre Musmeaux", "VOIE C RES L LEFEBVRE MUSMEAUX"],
+	[
+		"Voie Communale Résidence Pierre Joseph Fontaine",
+		"VOIE COMMUNALE RES P J FONTAINE"
+	],
+	["Voie Communale Verroere Straete Vc 5", "VOIE C VERROERE STRAETE VC 5"],
+	["Voie Communale ZI 2 Rue de Maugré", "VOIE C ZI 2 RUE DE MAUGRE"],
+	[
+		"Voie Communale les Cloches Rue Gervaise",
+		"VOIE C LES CLOCHES RUE GERVAISE"
+	],
+	[
+		"Voie d'accès service equipe. autoroute a55 marseille p.mir",
+		"VOIE A SCE E AUTORTE A M P MIR"
+	],
+	[
+		"Voie sans nom allee de la bastide basse",
+		"VOIE SANS NOM ALL LA BAST BASSE"
+	],
+	[
+		"Voie sans nom andre isaia moulin guieu bd",
+		"VOIE S NOM A ISAIA MOUL GUIEU BD"
+	],
+	["Voie sans nom bastide basse (impasse)", "VOIE SANS NOM BASTIDE BASSE IMP"],
+	["Voie sans nom canebiere contre-allee", "VOIE S N CANEBIERE CONTRE ALLEE"],
+	["Voie sans nom chevalier grands pins", "VOIE SANS NOM CHEVALIER GDS PINS"],
+	["Voie sans nom des belles ecuelles (rue)", "VOIE S NOM BELLES ECUELLES RUE"],
+	[
+		"Voie sans nom etoile polaire (ave) a capricorne(rue)",
+		"VOIE S N E P AVE CAPRICORNE RUE"
+	],
+	["Voie sans nom huveaune bd a laetitia ave", "VOIE S N H BD LAETITIA AVE"],
+	[
+		"Voie sans nom lucien allonge (ave) andre bacon",
+		"VOIE S NOM L ALLONGE AVE A BACON"
+	],
+	[
+		"Voie sans nom n° 16 a la voie - marlene (res.)",
+		"VOIE S NOM N 16 VOIE MARLENE RES"
+	],
+	["Voie sans nom rabat tra beauvallon sous bois", "VOIE S N R T B SOUS BOIS"],
+	["Voie sans nom rpt casino--trs martine", "VOIE S N RPT CASINO TRS MARTINE"],
+	["Voie sans nom sauclar (lot)", "VOIE SANS NOM SAUCLAR LOT "],
+	["Voie sans nom touraine all troia all", "VOIE S N TOURAINE ALL TROIA ALL"],
+	[
+		"Voie sans nom viste (n) a scierie (bd)",
+		"VOIE SANS NOM VISTE N SCIERIE BD"
+	],
+	[
+		"Zone Artisanale des Champs de la Couronne",
+		"ZONE ARTISANALE CHAMPS COURONNE"
+	],
+	["Zone d'activité économique du Sauveterrois", "ZAE DU SAUVETERROIS"],
+	[
+		"Zones d'activités du Vieux Tronc - Locmaria-Berrien",
+		"ZONES A VX T LOCMARIA BERRIEN"
+	],
+	[
+		"chemin de la Basse Ville chemin dit Bas chemin",
+		"CHEM BAS V CHEM DIT BAS CHEMIN"
+	],
+	["impasse Charles Lautrou (1891-1953)", "IMP CHARLES LAUTROU 1891 1953"],
+	[
+		"impasse Général R. A. Séré de Rivières (1815-1895)",
+		"IMP GAL R S RIVIERES 1815 1895"
+	],
+	[
+		"impasse chemin des Michels II (à nommer)",
+		"IMP CHEM DES MICHELS II A NOMMER"
+	],
+	["impasse chemin des michels III (à nommer)", "IMP CHEM DES M III A NOMMER"],
+	["impasse île ar vezou .", "IMPASSE ILE AR VEZOU "],
+	["le Bois des Sœurs", "LE BOIS DES SOEURS"],
+	["le Grand Plantier", "LE GRAND PLANTIER"],
+	[
+		"lotissement de la roucaoudo I (à nommer)",
+		"LOT DE LA ROUCAOUDO I A NOMMER"
+	],
+	["lotissement la roucaoudo IV (à nommer)", "LOT LA ROUCAOUDO IV A NOMMER"],
+	["lotissement les Résidences du Château", "LOT LES RESIDENCES DU CHATEAU"],
+	[
+		"rue Charles et Edouard Danguy des Deserts",
+		"RUE C ET E DANGUY DES DESERTS"
+	],
+	[
+		"rue des martyrs de la Résistance et de la Déportation",
+		"RUE M RESISTANCE DEPORTATION"
+	],
+	["rue révérend père christian fontaine", "RUE REVEREND PERE C FONTAINE"],
+	["résidence le clos simone schwartz", "RES LE CLOS SIMONE SCHWARTZ"]
+]
