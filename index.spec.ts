@@ -180,8 +180,9 @@ describe('normalize', () => {
 
     const result = normalize(veryLongAddress, 20);
 
-    expect(result).toBeDefined();
-    expect(result.length).toBeGreaterThan(0);
+    expect(result).toBe(
+      'BD GAL MAL J M P F B C E F G H J M N O P R S T VICTOR',
+    );
   });
 
   it('should handle addresses with mixed case and special characters', () => {
@@ -211,8 +212,9 @@ describe('normalize', () => {
 
     const result = normalize(extremelyLongAddress, 10);
 
-    expect(result).toBeDefined();
-    expect(result.length).toBeGreaterThan(0);
+    expect(result).toBe(
+      'BD T H M MAL J M P F B C E F G H J M N O P R S T V GDE N D L H E D C D L REP FR A S L S L B M D STS E D SAINTES',
+    );
   });
 
   it('should handle addresses that trigger article elimination', () => {
@@ -221,8 +223,7 @@ describe('normalize', () => {
 
     const result = normalize(articleHeavyAddress, 15);
 
-    expect(result).toBeDefined();
-    expect(result.length).toBeGreaterThan(0);
+    expect(result).toBe('RUE GDE MAIS R R D A E D STS A S D L MONTAGNE');
   });
 
   it('should preserve saint names when dealing with name abbreviations', () => {
@@ -259,7 +260,7 @@ describe('normalize', () => {
     const addressWithParticles = 'RUE PIERRE DE LA FONTAINE ET MARIE DU BOIS';
     const result = normalize(addressWithParticles);
 
-    expect(result).toBeDefined();
+    expect(result).toBe('RUE P DE LA FONT ET M DU BOIS');
   });
 
   it('should return the original string when already within max length', () => {
@@ -272,15 +273,14 @@ describe('normalize', () => {
     const address = 'RUE SAINTE MARIE';
     const result = normalize(address, 15);
 
-    expect(result).toBeDefined();
+    expect(result).toBe('RUE STE MARIE');
   });
 
   it('should handle addresses with special patterns that trigger selectShortWords with @', () => {
     const address = 'RUE A B C D E F G H I J K L M N O P Q R S T U V W X Y Z';
     const result = normalize(address, 5);
 
-    expect(result).toBeDefined();
-    expect(result.length).toBeGreaterThan(0);
+    expect(result).toBe('RUE B C E F G H I J K M N O P Q R S T U V W X Y Z');
   });
 
   it('should handle single character input', () => {
@@ -301,13 +301,12 @@ describe('normalize', () => {
   it('should handle very short max length', () => {
     const result = normalize('BOULEVARD DU MARECHAL', 5);
 
-    expect(result).toBeDefined();
-    expect(result.length).toBeGreaterThan(0);
+    expect(result).toBe('BD MARECHAL');
   });
 
   it('should handle edge case normalization scenarios', () => {
     expect(normalize('AVENUE', 10)).toBe('AVENUE');
-    expect(normalize('BOULEVARD AVENUE', 8)).toBeDefined();
+    expect(normalize('BOULEVARD AVENUE', 8)).toBe('BD AVENUE');
     expect(normalize('RUE DE', 10)).toBe('RUE DE');
   });
 });
